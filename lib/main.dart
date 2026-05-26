@@ -13,42 +13,22 @@ class NailsPassionApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Nail's Passion",
       theme: ThemeData.dark(),
-      home: const MainPage(),
+      home: const HomePage(),
     );
   }
 }
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  int currentIndex = 0;
-
-  final pages = const [
-    HomePage(),
-    GalleryPage(),
-    PrestationsPage(),
-    ContactPage(),
-  ];
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[currentIndex],
+      backgroundColor: Colors.black,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         selectedItemColor: Colors.pink,
         unselectedItemColor: Colors.white70,
-        currentIndex: currentIndex,
-        onTap: (index) {
-          setState(() {
-            currentIndex = index;
-          });
-        },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -68,245 +48,223 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text("Nail's Passion"),
-        backgroundColor: Colors.pink,
-        centerTitle: true,
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 40),
 
-            const Text(
-              "La beauté est notre passion",
-              style: TextStyle(
-                color: Colors.pink,
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-
-            const SizedBox(height: 50),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                FeatureItem(Icons.brush, "Pose Gel"),
-                FeatureItem(Icons.auto_awesome, "Nail Art"),
-                FeatureItem(Icons.favorite, "Manucure"),
-              ],
-            ),
-
-            const SizedBox(height: 60),
-
-            const Padding(
-              padding: EdgeInsets.all(20),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Nos prestations",
-                  style: TextStyle(
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold,
-                  ),
+            Container(
+              height: 350,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black,
+                    Color(0xFF1A0010),
+                    Colors.black,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                 ),
               ),
-            ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
 
-            const ServiceCard("Pose Gel", "25€"),
-            const ServiceCard("Nail Art", "15€"),
-            const ServiceCard("Remplissage", "20€"),
-            const ServiceCard("Manucure", "15€"),
+                  Container(
+                    width: 130,
+                    height: 130,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.pink,
+                        width: 3,
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.brush,
+                      color: Colors.pink,
+                      size: 70,
+                    ),
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  const Text(
+                    "Nail's Passion",
+                    style: TextStyle(
+                      fontSize: 38,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  const Text(
+                    "Beauté • Élégance • Premium",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.pinkAccent,
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.pink,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 40,
+                        vertical: 18,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: const Text(
+                      "Réserver maintenant",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
             const SizedBox(height: 30),
+
+            const Text(
+              "Nos prestations",
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            const ServiceCard(
+              title: "Pose Gel",
+              subtitle: "Longue tenue premium",
+              price: "25€",
+            ),
+
+            const ServiceCard(
+              title: "Nail Art",
+              subtitle: "Design personnalisé",
+              price: "15€",
+            ),
+
+            const ServiceCard(
+              title: "Remplissage",
+              subtitle: "Entretien parfait",
+              price: "20€",
+            ),
+
+            const ServiceCard(
+              title: "Manucure",
+              subtitle: "Soin & finition",
+              price: "15€",
+            ),
+
+            const SizedBox(height: 40),
           ],
         ),
       ),
-    );
-  }
-}
-
-class GalleryPage extends StatelessWidget {
-  const GalleryPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text("Galerie"),
-        backgroundColor: Colors.pink,
-      ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        padding: const EdgeInsets.all(20),
-        crossAxisSpacing: 15,
-        mainAxisSpacing: 15,
-        children: List.generate(
-          6,
-          (index) => Container(
-            decoration: BoxDecoration(
-              color: Colors.pink.shade300,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: const Icon(
-              Icons.photo,
-              color: Colors.white,
-              size: 50,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class PrestationsPage extends StatelessWidget {
-  const PrestationsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text("Prestations"),
-        backgroundColor: Colors.pink,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(20),
-        children: const [
-          ServiceCard("Pose Gel", "25€"),
-          ServiceCard("Nail Art", "15€"),
-          ServiceCard("Remplissage", "20€"),
-          ServiceCard("Manucure", "15€"),
-        ],
-      ),
-    );
-  }
-}
-
-class ContactPage extends StatelessWidget {
-  const ContactPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: const Text("Contact"),
-        backgroundColor: Colors.pink,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: const [
-            ContactCard(Icons.phone, "06 12 34 56 78"),
-            SizedBox(height: 20),
-            ContactCard(Icons.email, "contact@nailspassion.fr"),
-            SizedBox(height: 20),
-            ContactCard(Icons.location_on, "Paris, France"),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class FeatureItem extends StatelessWidget {
-  final IconData icon;
-  final String title;
-
-  const FeatureItem(this.icon, this.title, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 35,
-          backgroundColor: Colors.pink,
-          child: Icon(icon, color: Colors.white, size: 35),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          title,
-          style: const TextStyle(fontSize: 18),
-        ),
-      ],
     );
   }
 }
 
 class ServiceCard extends StatelessWidget {
   final String title;
+  final String subtitle;
   final String price;
 
-  const ServiceCard(this.title, this.price, {super.key});
+  const ServiceCard({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.price,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 10,
+      ),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white10,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 22),
-          ),
-          Text(
-            price,
-            style: const TextStyle(
-              fontSize: 24,
-              color: Colors.pink,
-              fontWeight: FontWeight.bold,
-            ),
+        color: const Color(0xFF111111),
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(
+          color: Colors.pink.withOpacity(0.4),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.pink.withOpacity(0.15),
+            blurRadius: 20,
+            spreadRadius: 2,
           ),
         ],
       ),
-    );
-  }
-}
-
-class ContactCard extends StatelessWidget {
-  final IconData icon;
-  final String text;
-
-  const ContactCard(this.icon, this.text, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white10,
-        borderRadius: BorderRadius.circular(20),
-      ),
       child: Row(
         children: [
-          Icon(icon, color: Colors.pink, size: 35),
+
+          Container(
+            padding: const EdgeInsets.all(15),
+            decoration: BoxDecoration(
+              color: Colors.pink.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: const Icon(
+              Icons.favorite,
+              color: Colors.pink,
+              size: 30,
+            ),
+          ),
+
           const SizedBox(width: 20),
+
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+
+                const SizedBox(height: 5),
+
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    color: Colors.white70,
+                    fontSize: 15,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           Text(
-            text,
-            style: const TextStyle(fontSize: 18),
+            price,
+            style: const TextStyle(
+              color: Colors.pink,
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
