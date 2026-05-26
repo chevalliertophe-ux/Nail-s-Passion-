@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "NailPassionApp",
+    "slug": "NailPassionApp",
+    "extra": {
+      "eas": {
+        "projectId": "38590f0e-8f2d-41f7-a199-4af018afb4ea"
+      }
+    },
+    "android": {
+      "package": "com.totof63.NailPassionApp"
+    }
+  }
+}
