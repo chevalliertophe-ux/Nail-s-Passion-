@@ -1,9 +1,16 @@
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from "react-native";
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 
 export default function HomeScreen() {
   return (
     <ScrollView style={styles.container}>
-      
       <Image
         source={{
           uri: "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1200",
@@ -11,17 +18,23 @@ export default function HomeScreen() {
         style={styles.hero}
       />
 
-      <Text style={styles.title}>Nail's Passion</Text>
+      <View style={styles.overlay}>
+        <Text style={styles.title}>Nail's Passion</Text>
 
-      <Text style={styles.subtitle}>
-        Beauté • Élégance • Onglerie Premium
+        <Text style={styles.subtitle}>
+          Beauté • Luxe • Élégance
+        </Text>
+
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>
+            Réserver maintenant
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.section}>
+        Prestations Premium
       </Text>
-
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Réserver maintenant</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.section}>Nos Prestations</Text>
 
       <View style={styles.card}>
         <Image
@@ -30,8 +43,9 @@ export default function HomeScreen() {
           }}
           style={styles.cardImage}
         />
+
         <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>Pose Gel</Text>
+          <Text style={styles.cardTitle}>Pose Gel Luxe</Text>
           <Text style={styles.cardPrice}>25€</Text>
         </View>
       </View>
@@ -39,13 +53,14 @@ export default function HomeScreen() {
       <View style={styles.card}>
         <Image
           source={{
-            uri: "https://images.unsplash.com/photo-1610992015732-2449b76344bc?q=80&w=1200",
+            uri: "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?q=80&w=1200",
           }}
           style={styles.cardImage}
         />
+
         <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>Nail Art</Text>
-          <Text style={styles.cardPrice}>15€</Text>
+          <Text style={styles.cardTitle}>Nail Art Premium</Text>
+          <Text style={styles.cardPrice}>40€</Text>
         </View>
       </View>
 
@@ -56,12 +71,18 @@ export default function HomeScreen() {
           }}
           style={styles.cardImage}
         />
+
         <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>Remplissage</Text>
-          <Text style={styles.cardPrice}>20€</Text>
+          <Text style={styles.cardTitle}>Manucure Glow</Text>
+          <Text style={styles.cardPrice}>30€</Text>
         </View>
       </View>
 
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          Nail's Passion • Premium Studio
+        </Text>
+      </View>
     </ScrollView>
   );
 }
@@ -69,39 +90,48 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#000",
+    backgroundColor: "#050505",
   },
 
   hero: {
     width: "100%",
-    height: 340,
+    height: 420,
+  },
+
+  overlay: {
+    marginTop: -120,
+    paddingHorizontal: 25,
   },
 
   title: {
     color: "#ff1493",
-    fontSize: 42,
+    fontSize: 46,
     fontWeight: "bold",
     textAlign: "center",
-    marginTop: 20,
+    textShadowColor: "#ff1493",
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 18,
   },
 
   subtitle: {
-    color: "#fff",
+    color: "#ffffff",
     textAlign: "center",
-    fontSize: 16,
-    marginTop: 10,
-    marginBottom: 25,
+    fontSize: 18,
+    marginTop: 12,
+    marginBottom: 30,
+    letterSpacing: 1,
   },
 
   button: {
     backgroundColor: "#ff1493",
     marginHorizontal: 25,
     padding: 18,
-    borderRadius: 18,
+    borderRadius: 40,
     alignItems: "center",
     shadowColor: "#ff1493",
-    shadowOpacity: 0.8,
-    shadowRadius: 12,
+    shadowOpacity: 0.9,
+    shadowRadius: 20,
+    elevation: 12,
   },
 
   buttonText: {
@@ -112,19 +142,23 @@ const styles = StyleSheet.create({
 
   section: {
     color: "#fff",
-    fontSize: 30,
+    fontSize: 34,
     fontWeight: "bold",
-    margin: 25,
+    marginTop: 45,
+    marginBottom: 25,
+    marginLeft: 20,
   },
 
   card: {
     backgroundColor: "#111",
+    borderRadius: 28,
     marginHorizontal: 20,
-    marginBottom: 25,
-    borderRadius: 22,
+    marginBottom: 28,
     overflow: "hidden",
-    borderWidth: 1,
-    borderColor: "#ff1493",
+    shadowColor: "#ff1493",
+    shadowOpacity: 0.4,
+    shadowRadius: 15,
+    elevation: 10,
   },
 
   cardImage: {
@@ -133,9 +167,10 @@ const styles = StyleSheet.create({
   },
 
   cardContent: {
+    padding: 20,
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 18,
+    alignItems: "center",
   },
 
   cardTitle: {
@@ -146,7 +181,18 @@ const styles = StyleSheet.create({
 
   cardPrice: {
     color: "#ff1493",
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
+  },
+
+  footer: {
+    marginTop: 30,
+    marginBottom: 60,
+    alignItems: "center",
+  },
+
+  footerText: {
+    color: "#777",
+    fontSize: 16,
   },
 });
