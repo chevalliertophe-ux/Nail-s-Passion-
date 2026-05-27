@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> {
   final pages = const [
     HomePage(),
     GalleryPage(),
-    PrestationsPage(),
+    ServicesPage(),
     ContactPage(),
     AdminPage(),
   ];
@@ -57,7 +57,6 @@ class _MainPageState extends State<MainPage> {
         currentIndex: currentIndex,
 
         onTap: (index) {
-
           setState(() {
             currentIndex = index;
           });
@@ -71,7 +70,7 @@ class _MainPageState extends State<MainPage> {
           ),
 
           BottomNavigationBarItem(
-            icon: Icon(Icons.photo_library),
+            icon: Icon(Icons.image),
             label: "Galerie",
           ),
 
@@ -105,97 +104,115 @@ class HomePage extends StatelessWidget {
 
       backgroundColor: Colors.black,
 
-      body: SafeArea(
+      body: Container(
 
-        child: SingleChildScrollView(
+        decoration: const BoxDecoration(
 
-          child: Column(
+          gradient: LinearGradient(
 
-            children: [
-
-              const SizedBox(height: 30),
-
-              const Icon(
-                Icons.workspace_premium,
-                color: Colors.amber,
-                size: 100,
-              ),
-
-              const SizedBox(height: 20),
-
-              const Text(
-
-                "Nail's Passion",
-
-                style: TextStyle(
-                  fontSize: 38,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.pinkAccent,
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              const Text(
-
-                "La beauté est notre passion 💖",
-
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 20,
-                ),
-              ),
-
-              const SizedBox(height: 40),
-
-              Row(
-
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceEvenly,
-
-                children: const [
-
-                  FeatureItem(
-                    Icons.brush,
-                    "Pose Gel",
-                  ),
-
-                  FeatureItem(
-                    Icons.auto_awesome,
-                    "Nail Art",
-                  ),
-
-                  FeatureItem(
-                    Icons.favorite,
-                    "Manucure",
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 50),
-
-              const ServiceCard(
-                "Pose Gel",
-                "25€",
-              ),
-
-              const ServiceCard(
-                "Nail Art",
-                "15€",
-              ),
-
-              const ServiceCard(
-                "Remplissage",
-                "20€",
-              ),
-
-              const ServiceCard(
-                "Manucure",
-                "15€",
-              ),
-
-              const SizedBox(height: 30),
+            colors: [
+              Colors.black,
+              Color(0xFF1A0010),
+              Colors.black,
             ],
+
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+
+        child: SafeArea(
+
+          child: SingleChildScrollView(
+
+            child: Column(
+
+              children: [
+
+                const SizedBox(height: 30),
+
+                const Icon(
+                  Icons.workspace_premium,
+                  color: Colors.amber,
+                  size: 100,
+                ),
+
+                const SizedBox(height: 20),
+
+                const Text(
+
+                  "Nail's Passion",
+
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.pinkAccent,
+                  ),
+                ),
+
+                const SizedBox(height: 15),
+
+                const Text(
+
+                  "La beauté est notre passion 💖",
+
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                  ),
+                ),
+
+                const SizedBox(height: 40),
+
+                Row(
+
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceEvenly,
+
+                  children: const [
+
+                    PremiumButton(
+                      Icons.brush,
+                      "Pose Gel",
+                    ),
+
+                    PremiumButton(
+                      Icons.auto_awesome,
+                      "Nail Art",
+                    ),
+
+                    PremiumButton(
+                      Icons.favorite,
+                      "Manucure",
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 50),
+
+                const PremiumCard(
+                  "Pose Gel",
+                  "25€",
+                ),
+
+                const PremiumCard(
+                  "Nail Art",
+                  "15€",
+                ),
+
+                const PremiumCard(
+                  "Remplissage",
+                  "20€",
+                ),
+
+                const PremiumCard(
+                  "Manucure",
+                  "15€",
+                ),
+
+                const SizedBox(height: 30),
+              ],
+            ),
           ),
         ),
       ),
@@ -231,14 +248,14 @@ class GalleryPage extends StatelessWidget {
           mainAxisSpacing: 15,
         ),
 
-        itemBuilder: (_, index) {
+        itemBuilder: (context, index) {
 
           return Container(
 
             decoration: BoxDecoration(
 
               borderRadius:
-                  BorderRadius.circular(20),
+                  BorderRadius.circular(25),
 
               gradient: const LinearGradient(
                 colors: [
@@ -246,12 +263,20 @@ class GalleryPage extends StatelessWidget {
                   Colors.black,
                 ],
               ),
+
+              boxShadow: const [
+
+                BoxShadow(
+                  color: Colors.pinkAccent,
+                  blurRadius: 10,
+                ),
+              ],
             ),
 
             child: const Icon(
               Icons.image,
               color: Colors.white,
-              size: 50,
+              size: 60,
             ),
           );
         },
@@ -260,8 +285,8 @@ class GalleryPage extends StatelessWidget {
   }
 }
 
-class PrestationsPage extends StatelessWidget {
-  const PrestationsPage({super.key});
+class ServicesPage extends StatelessWidget {
+  const ServicesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -281,10 +306,10 @@ class PrestationsPage extends StatelessWidget {
 
         children: const [
 
-          ServiceCard("Pose Gel", "25€"),
-          ServiceCard("Nail Art", "15€"),
-          ServiceCard("Remplissage", "20€"),
-          ServiceCard("Manucure", "15€"),
+          PremiumCard("Pose Gel", "25€"),
+          PremiumCard("Nail Art", "15€"),
+          PremiumCard("Remplissage", "20€"),
+          PremiumCard("Manucure", "15€"),
         ],
       ),
     );
@@ -312,25 +337,10 @@ class ContactPage extends StatelessWidget {
 
         children: const [
 
-          ContactCard(
-            Icons.phone,
-            "06 12 34 56 78",
-          ),
-
-          ContactCard(
-            Icons.message,
-            "WhatsApp",
-          ),
-
-          ContactCard(
-            Icons.camera_alt,
-            "@nailspassion",
-          ),
-
-          ContactCard(
-            Icons.location_on,
-            "Paris",
-          ),
+          ContactTile(Icons.phone, "06 12 34 56 78"),
+          ContactTile(Icons.message, "WhatsApp"),
+          ContactTile(Icons.camera_alt, "@nailspassion"),
+          ContactTile(Icons.location_on, "Paris"),
         ],
       ),
     );
@@ -356,16 +366,24 @@ class AdminPage extends StatelessWidget {
 
         child: Container(
 
-          padding: const EdgeInsets.all(30),
-
           margin: const EdgeInsets.all(30),
+
+          padding: const EdgeInsets.all(30),
 
           decoration: BoxDecoration(
 
             color: Colors.white10,
 
             borderRadius:
-                BorderRadius.circular(25),
+                BorderRadius.circular(30),
+
+            boxShadow: const [
+
+              BoxShadow(
+                color: Colors.pinkAccent,
+                blurRadius: 20,
+              ),
+            ],
           ),
 
           child: const Column(
@@ -376,8 +394,8 @@ class AdminPage extends StatelessWidget {
 
               Icon(
                 Icons.lock,
-                color: Colors.pinkAccent,
                 size: 90,
+                color: Colors.pinkAccent,
               ),
 
               SizedBox(height: 20),
@@ -387,8 +405,8 @@ class AdminPage extends StatelessWidget {
                 "Code Admin : 0712",
 
                 style: TextStyle(
-                  fontSize: 28,
                   color: Colors.white,
+                  fontSize: 28,
                 ),
               ),
             ],
@@ -399,14 +417,14 @@ class AdminPage extends StatelessWidget {
   }
 }
 
-class FeatureItem extends StatelessWidget {
+class PremiumButton extends StatelessWidget {
 
   final IconData icon;
-  final String title;
+  final String text;
 
-  const FeatureItem(
+  const PremiumButton(
     this.icon,
-    this.title, {
+    this.text, {
       super.key,
     });
 
@@ -417,11 +435,25 @@ class FeatureItem extends StatelessWidget {
 
       children: [
 
-        CircleAvatar(
+        Container(
 
-          radius: 35,
+          padding: const EdgeInsets.all(20),
 
-          backgroundColor: Colors.pinkAccent,
+          decoration: BoxDecoration(
+
+            color: Colors.pinkAccent,
+
+            borderRadius:
+                BorderRadius.circular(50),
+
+            boxShadow: const [
+
+              BoxShadow(
+                color: Colors.pinkAccent,
+                blurRadius: 20,
+              ),
+            ],
+          ),
 
           child: Icon(
             icon,
@@ -433,11 +465,12 @@ class FeatureItem extends StatelessWidget {
         const SizedBox(height: 10),
 
         Text(
-          title,
+
+          text,
 
           style: const TextStyle(
-            fontSize: 18,
             color: Colors.white,
+            fontSize: 18,
           ),
         ),
       ],
@@ -445,12 +478,12 @@ class FeatureItem extends StatelessWidget {
   }
 }
 
-class ServiceCard extends StatelessWidget {
+class PremiumCard extends StatelessWidget {
 
   final String title;
   final String price;
 
-  const ServiceCard(
+  const PremiumCard(
     this.title,
     this.price, {
       super.key,
@@ -463,21 +496,21 @@ class ServiceCard extends StatelessWidget {
 
       margin: const EdgeInsets.only(bottom: 20),
 
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(22),
 
       decoration: BoxDecoration(
 
         color: Colors.white10,
 
         borderRadius:
-            BorderRadius.circular(25),
+            BorderRadius.circular(30),
 
         boxShadow: const [
 
           BoxShadow(
             color: Colors.pinkAccent,
-            blurRadius: 10,
-          )
+            blurRadius: 12,
+          ),
         ],
       ),
 
@@ -489,20 +522,22 @@ class ServiceCard extends StatelessWidget {
         children: [
 
           Text(
+
             title,
 
             style: const TextStyle(
-              fontSize: 22,
               color: Colors.white,
+              fontSize: 24,
             ),
           ),
 
           Text(
+
             price,
 
             style: const TextStyle(
-              fontSize: 24,
               color: Colors.pinkAccent,
+              fontSize: 28,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -512,12 +547,12 @@ class ServiceCard extends StatelessWidget {
   }
 }
 
-class ContactCard extends StatelessWidget {
+class ContactTile extends StatelessWidget {
 
   final IconData icon;
   final String text;
 
-  const ContactCard(
+  const ContactTile(
     this.icon,
     this.text, {
       super.key,
@@ -553,11 +588,12 @@ class ContactCard extends StatelessWidget {
           const SizedBox(width: 20),
 
           Text(
+
             text,
 
             style: const TextStyle(
-              fontSize: 18,
               color: Colors.white,
+              fontSize: 20,
             ),
           ),
         ],
