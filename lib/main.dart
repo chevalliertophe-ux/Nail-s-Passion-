@@ -157,7 +157,7 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
 
-                  premiumButton(Icons.calendar_month, "Réserver"),
+                  premiumButton(context, Icons.calendar_month, "Réserver"),
 
                   premiumButton(Icons.phone, "Contact"),
                 ],
@@ -187,7 +187,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget premiumButton(IconData icon, String text) {
+  Widget premiumButton(BuildContext context, IconData icon, String text) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(40),
@@ -212,7 +212,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
 
-        onPressed: () {},
+        onPressed: () { ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("$text bientôt disponible"), backgroundColor: Colors.pinkAccent)); },
 
         icon: Icon(icon),
         label: Text(
