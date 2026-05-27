@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const NailsPassionApp());
+  runApp(const NailsPassion());
 }
 
-class NailsPassionApp extends StatelessWidget {
-  const NailsPassionApp({super.key});
+class NailsPassion extends StatelessWidget {
+  const NailsPassion({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.black,
-      ),
       home: const HomePage(),
     );
   }
@@ -24,114 +21,144 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-
       backgroundColor: Colors.black,
 
-      body: SafeArea(
-
-        child: SingleChildScrollView(
-
-          child: Column(
-
-            children: [
-
-              const SizedBox(height: 20),
-
-              const Icon(
-                Icons.workspace_premium,
-                color: Colors.amber,
-                size: 90,
-              ),
-
-              const SizedBox(height: 10),
-
-              const Text(
-                "Nail's Passion",
-                style: TextStyle(
-                  color: Colors.pinkAccent,
-                  fontSize: 38,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 10),
-
-              const Text(
-                "La beauté est notre passion 💖",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-              ),
-
-              const SizedBox(height: 30),
-
-              Padding(
-                padding: const EdgeInsets.all(15),
-
-                child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceEvenly,
-
-                  children: [
-
-                    premiumButton(
-                      Icons.brush,
-                      "Pose Gel",
-                    ),
-
-                    premiumButton(
-                      Icons.auto_awesome,
-                      "Nail Art",
-                    ),
-
-                    premiumButton(
-                      Icons.favorite,
-                      "Manucure",
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              premiumCard(
-                "Pose Gel",
-                "25€",
-              ),
-
-              premiumCard(
-                "Nail Art",
-                "15€",
-              ),
-
-              premiumCard(
-                "Remplissage",
-                "20€",
-              ),
-
-              premiumCard(
-                "Manucure",
-                "15€",
-              ),
-
-              const SizedBox(height: 30),
-            ],
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        title: const Text(
+          "Nail's Passion",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
 
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+
+            Container(
+              height: 320,
+
+              decoration: const BoxDecoration(
+
+                image: DecorationImage(
+                  image: NetworkImage(
+                    "https://images.unsplash.com/photo-1604654894610-df63bc536371",
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black.withOpacity(0.8),
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.9),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    const Text(
+                      "Bienvenue 💖",
+                      style: TextStyle(
+                        color: Colors.pinkAccent,
+                        fontSize: 26,
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
+                    const Text(
+                      "Nail's Passion",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 42,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.pinkAccent,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 18,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        "Réserver maintenant",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            const Text(
+              "Nos Prestations",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            serviceCard(
+              "Pose Gel",
+              "25€",
+              Icons.brush,
+            ),
+
+            serviceCard(
+              "Nail Art",
+              "15€",
+              Icons.auto_awesome,
+            ),
+
+            serviceCard(
+              "Remplissage",
+              "20€",
+              Icons.favorite,
+            ),
+
+            serviceCard(
+              "Manucure",
+              "15€",
+              Icons.spa,
+            ),
+
+            const SizedBox(height: 30),
+          ],
+        ),
+      ),
+
       bottomNavigationBar: BottomNavigationBar(
-
         backgroundColor: Colors.black,
-
-        selectedItemColor:
-            Colors.pinkAccent,
-
-        unselectedItemColor:
-            Colors.white,
+        selectedItemColor: Colors.pinkAccent,
+        unselectedItemColor: Colors.white54,
 
         items: const [
 
@@ -164,111 +191,68 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget premiumButton(
-    IconData icon,
-    String text,
-  ) {
-
-    return Column(
-
-      children: [
-
-        Container(
-
-          padding: const EdgeInsets.all(20),
-
-          decoration: BoxDecoration(
-
-            color: Colors.pinkAccent,
-
-            shape: BoxShape.circle,
-
-            boxShadow: const [
-
-              BoxShadow(
-                color: Colors.pinkAccent,
-                blurRadius: 25,
-              ),
-            ],
-          ),
-
-          child: Icon(
-            icon,
-            color: Colors.white,
-            size: 35,
-          ),
-        ),
-
-        const SizedBox(height: 10),
-
-        Text(
-          text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget premiumCard(
+  static Widget serviceCard(
     String title,
     String price,
+    IconData icon,
   ) {
 
     return Container(
 
-      margin: const EdgeInsets.all(15),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 10,
+      ),
 
-      padding: const EdgeInsets.all(25),
+      padding: const EdgeInsets.all(20),
 
       decoration: BoxDecoration(
 
-        borderRadius:
-            BorderRadius.circular(30),
+        color: const Color(0xFF121212),
 
-        gradient: const LinearGradient(
+        borderRadius: BorderRadius.circular(25),
 
-          colors: [
-            Colors.pinkAccent,
-            Colors.black,
-          ],
-        ),
-
-        boxShadow: const [
+        boxShadow: [
 
           BoxShadow(
-            color: Colors.pinkAccent,
-            blurRadius: 25,
+            color: Colors.pinkAccent.withOpacity(0.4),
+            blurRadius: 20,
           ),
         ],
       ),
 
       child: Row(
-
         mainAxisAlignment:
             MainAxisAlignment.spaceBetween,
 
         children: [
 
-          Text(
+          Row(
+            children: [
 
-            title,
+              Icon(
+                icon,
+                color: Colors.pinkAccent,
+                size: 32,
+              ),
 
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 28,
-            ),
+              const SizedBox(width: 15),
+
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                ),
+              ),
+            ],
           ),
 
           Text(
-
             price,
-
             style: const TextStyle(
               color: Colors.pinkAccent,
-              fontSize: 26,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
