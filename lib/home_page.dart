@@ -12,76 +12,178 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
 
-            const SizedBox(height: 50),
-
-            const CircleAvatar(
-              radius: 60,
-              backgroundColor: Colors.pinkAccent,
-              child: Icon(
-                Icons.star,
-                size: 60,
-                color: Colors.white,
-              ),
-            ),
-
-            const SizedBox(height: 25),
-
-            const Text(
-              "Nail's Passion",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 42,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            const Text(
-              "Beauté • Élégance • Premium",
-              style: TextStyle(
-                color: Colors.white54,
-                fontSize: 18,
-              ),
-            ),
-
-            const SizedBox(height: 40),
-
-            const Text(
-              "La beauté est ma passion 💖",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 34,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 40),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Stack(
               children: [
 
-                premiumButton(
-                  Icons.calendar_month,
-                  "Réserver",
+                Container(
+                  height: 500,
+                  width: double.infinity,
+
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f',
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
 
-                premiumButton(
-                  Icons.phone,
-                  "Contact",
+                Container(
+                  height: 500,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+
+                      colors: [
+                        Colors.black.withOpacity(0.3),
+                        Colors.black.withOpacity(0.95),
+                      ],
+                    ),
+                  ),
+                ),
+
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+
+                    child: Column(
+                      children: [
+
+                        Row(
+                          mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+
+                          children: [
+
+                            const Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                              size: 35,
+                            ),
+
+                            Container(
+                              padding: const EdgeInsets.all(14),
+
+                              decoration: BoxDecoration(
+                                color: Colors.pinkAccent,
+                                borderRadius:
+                                    BorderRadius.circular(30),
+
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.pinkAccent
+                                        .withOpacity(0.6),
+                                    blurRadius: 20,
+                                  ),
+                                ],
+                              ),
+
+                              child: const Icon(
+                                Icons.notifications,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 40),
+
+                        Container(
+                          width: 150,
+                          height: 150,
+
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.black,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.pinkAccent
+                                    .withOpacity(0.7),
+                                blurRadius: 40,
+                              ),
+                            ],
+                          ),
+
+                          child: const Center(
+                            child: Text(
+                              "N",
+                              style: TextStyle(
+                                color: Colors.pinkAccent,
+                                fontSize: 80,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 30),
+
+                        const Text(
+                          "Nail's Passion",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 46,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        const Text(
+                          "Beauté • Élégance • Premium",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 20,
+                          ),
+                        ),
+
+                        const SizedBox(height: 50),
+
+                        const Text(
+                          "La beauté est ma passion 💖",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 38,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        const SizedBox(height: 50),
+
+                        Row(
+                          mainAxisAlignment:
+                              MainAxisAlignment.spaceEvenly,
+
+                          children: [
+
+                            premiumButton(
+                              Icons.calendar_month,
+                              "Réserver",
+                            ),
+
+                            premiumButton(
+                              Icons.phone,
+                              "Contact",
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
 
-            const SizedBox(height: 50),
+            const SizedBox(height: 20),
 
             const Text(
               "Nos Prestations",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 34,
+                fontSize: 36,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -106,12 +208,14 @@ class HomePage extends StatelessWidget {
   ) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: 35,
+        horizontal: 30,
         vertical: 18,
       ),
+
       decoration: BoxDecoration(
         color: Colors.pinkAccent,
         borderRadius: BorderRadius.circular(40),
+
         boxShadow: [
           BoxShadow(
             color: Colors.pinkAccent.withOpacity(0.7),
@@ -119,10 +223,17 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+
       child: Row(
         children: [
-          Icon(icon, color: Colors.white),
+
+          Icon(
+            icon,
+            color: Colors.white,
+          ),
+
           const SizedBox(width: 10),
+
           Text(
             text,
             style: const TextStyle(
@@ -145,6 +256,7 @@ class HomePage extends StatelessWidget {
         horizontal: 20,
         vertical: 12,
       ),
+
       padding: const EdgeInsets.all(25),
 
       decoration: BoxDecoration(
@@ -153,8 +265,8 @@ class HomePage extends StatelessWidget {
 
         boxShadow: [
           BoxShadow(
-            color: Colors.pinkAccent.withOpacity(0.3),
-            blurRadius: 25,
+            color: Colors.pinkAccent.withOpacity(0.25),
+            blurRadius: 30,
           ),
         ],
       ),
