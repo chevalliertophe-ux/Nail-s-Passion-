@@ -159,7 +159,7 @@ class HomePage extends StatelessWidget {
 
                   premiumButton(context, Icons.calendar_month, "Réserver"),
 
-                  premiumButton(Icons.phone, "Contact"),
+                  premiumButton(context, Icons.phone, "Contact"),
                 ],
               ),
 
