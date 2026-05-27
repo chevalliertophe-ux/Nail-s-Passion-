@@ -1,219 +1,255 @@
-class AdminPage extends StatefulWidget {
-  const AdminPage({super.key});
+import 'package:flutter/material.dart';
 
-  @override
-  State<AdminPage> createState() => _AdminPageState();
+void main() {
+  runApp(const NailsApp());
 }
 
-class _AdminPageState extends State<AdminPage> {
-
-  final TextEditingController controller =
-      TextEditingController();
-
-  bool unlocked = false;
+class NailsApp extends StatelessWidget {
+  const NailsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const HomePage(),
+    );
+  }
+}
 
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
 
       backgroundColor: Colors.black,
 
       appBar: AppBar(
         backgroundColor: Colors.pinkAccent,
-        title: const Text("Admin"),
+        title: const Text("Nail's Passion"),
       ),
 
-      body: Center(
+      body: SingleChildScrollView(
 
-        child: unlocked
+        child: Column(
 
-            ? ListView(
+          children: [
 
-                padding: const EdgeInsets.all(20),
+            const SizedBox(height: 30),
 
-                children: [
+            const Icon(
+              Icons.workspace_premium,
+              color: Colors.amber,
+              size: 100,
+            ),
 
-                  adminButton(
-                    Icons.edit,
-                    "Modifier tarifs",
-                  ),
+            const SizedBox(height: 20),
 
-                  adminButton(
-                    Icons.photo,
-                    "Galerie photos",
-                  ),
-
-                  adminButton(
-                    Icons.schedule,
-                    "Horaires",
-                  ),
-
-                  adminButton(
-                    Icons.message,
-                    "WhatsApp",
-                  ),
-
-                  adminButton(
-                    Icons.camera_alt,
-                    "Instagram",
-                  ),
-
-                  adminButton(
-                    Icons.calendar_month,
-                    "Agenda",
-                  ),
-                ],
-              )
-
-            : Container(
-
-                margin: const EdgeInsets.all(30),
-
-                padding: const EdgeInsets.all(30),
-
-                decoration: BoxDecoration(
-
-                  color: Colors.white10,
-
-                  borderRadius:
-                      BorderRadius.circular(30),
-
-                  boxShadow: const [
-
-                    BoxShadow(
-                      color: Colors.pinkAccent,
-                      blurRadius: 20,
-                    ),
-                  ],
-                ),
-
-                child: Column(
-
-                  mainAxisSize: MainAxisSize.min,
-
-                  children: [
-
-                    const Icon(
-                      Icons.lock,
-                      size: 90,
-                      color: Colors.pinkAccent,
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    TextField(
-
-                      controller: controller,
-
-                      obscureText: true,
-
-                      style:
-                          const TextStyle(
-                        color: Colors.white,
-                      ),
-
-                      decoration: InputDecoration(
-
-                        hintText: "Code admin",
-
-                        hintStyle:
-                            const TextStyle(
-                          color: Colors.white54,
-                        ),
-
-                        filled: true,
-
-                        fillColor: Colors.black,
-
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(20),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    ElevatedButton(
-
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            Colors.pinkAccent,
-                      ),
-
-                      onPressed: () {
-
-                        if (controller.text ==
-                            "0712") {
-
-                          setState(() {
-                            unlocked = true;
-                          });
-                        }
-                      },
-
-                      child: const Text(
-                        "Connexion",
-                      ),
-                    ),
-                  ],
-                ),
+            const Text(
+              "Nail's Passion",
+              style: TextStyle(
+                color: Colors.pinkAccent,
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
               ),
+            ),
+
+            const SizedBox(height: 10),
+
+            const Text(
+              "La beauté est notre passion 💖",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+              ),
+            ),
+
+            const SizedBox(height: 40),
+
+            Row(
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceEvenly,
+
+              children: [
+
+                serviceButton(
+                  Icons.brush,
+                  "Pose Gel",
+                ),
+
+                serviceButton(
+                  Icons.auto_awesome,
+                  "Nail Art",
+                ),
+
+                serviceButton(
+                  Icons.favorite,
+                  "Manucure",
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 40),
+
+            prestationCard(
+              "Pose Gel",
+              "25€",
+            ),
+
+            prestationCard(
+              "Nail Art",
+              "15€",
+            ),
+
+            prestationCard(
+              "Remplissage",
+              "20€",
+            ),
+
+            prestationCard(
+              "Manucure",
+              "15€",
+            ),
+
+            const SizedBox(height: 30),
+          ],
+        ),
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+
+        backgroundColor: Colors.black,
+
+        selectedItemColor: Colors.pinkAccent,
+
+        unselectedItemColor: Colors.white,
+
+        items: const [
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Accueil",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.photo),
+            label: "Galerie",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: "Prestations",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.phone),
+            label: "Contact",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.lock),
+            label: "Admin",
+          ),
+        ],
       ),
     );
   }
 
-  Widget adminButton(
-    IconData icon,
-    String text,
+  Widget prestationCard(
+    String title,
+    String price,
   ) {
 
     return Container(
 
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.all(15),
 
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(25),
 
       decoration: BoxDecoration(
 
-        color: Colors.white10,
+        color: Colors.pinkAccent,
 
         borderRadius:
-            BorderRadius.circular(25),
+            BorderRadius.circular(30),
 
         boxShadow: const [
 
           BoxShadow(
             color: Colors.pinkAccent,
-            blurRadius: 10,
+            blurRadius: 20,
           ),
         ],
       ),
 
       child: Row(
 
+        mainAxisAlignment:
+            MainAxisAlignment.spaceBetween,
+
         children: [
-
-          Icon(
-            icon,
-            color: Colors.pinkAccent,
-            size: 35,
-          ),
-
-          const SizedBox(width: 20),
 
           Text(
 
-            text,
+            title,
 
             style: const TextStyle(
               color: Colors.white,
-              fontSize: 22,
+              fontSize: 28,
+            ),
+          ),
+
+          Text(
+
+            price,
+
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget serviceButton(
+    IconData icon,
+    String text,
+  ) {
+
+    return Column(
+
+      children: [
+
+        CircleAvatar(
+
+          radius: 45,
+
+          backgroundColor:
+              Colors.pinkAccent,
+
+          child: Icon(
+            icon,
+            color: Colors.white,
+            size: 40,
+          ),
+        ),
+
+        const SizedBox(height: 10),
+
+        Text(
+
+          text,
+
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+          ),
+        ),
+      ],
     );
   }
 }
