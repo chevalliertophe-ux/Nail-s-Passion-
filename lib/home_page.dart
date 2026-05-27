@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: NetworkImage(
-                        'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f',
+'https://images.unsplash.com/photo-1610992015732-2449b76344bc?q=80&w=1200',
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -35,7 +35,6 @@ class HomePage extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-
                       colors: [
                         Colors.black.withOpacity(0.3),
                         Colors.black.withOpacity(0.95),
@@ -57,64 +56,36 @@ class HomePage extends StatelessWidget {
 
                           children: [
 
-                            const Icon(
-                              Icons.menu,
-                              color: Colors.white,
-                              size: 35,
-                            ),
+                            premiumIcon(Icons.menu),
 
-                            Container(
-                              padding: const EdgeInsets.all(14),
-
-                              decoration: BoxDecoration(
-                                color: Colors.pinkAccent,
-                                borderRadius:
-                                    BorderRadius.circular(30),
-
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.pinkAccent
-                                        .withOpacity(0.6),
-                                    blurRadius: 20,
-                                  ),
-                                ],
-                              ),
-
-                              child: const Icon(
-                                Icons.notifications,
-                                color: Colors.white,
-                              ),
-                            ),
+                            premiumIcon(Icons.notifications),
                           ],
                         ),
 
                         const SizedBox(height: 40),
 
                         Container(
-                          width: 150,
-                          height: 150,
+                          height: 140,
+                          width: 140,
 
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
                             color: Colors.black,
+                            shape: BoxShape.circle,
+
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.pinkAccent
-                                    .withOpacity(0.7),
+                                color:
+                                    Colors.pinkAccent.withOpacity(0.7),
                                 blurRadius: 40,
+                                spreadRadius: 5,
                               ),
                             ],
                           ),
 
-                          child: const Center(
-                            child: Text(
-                              "N",
-                              style: TextStyle(
-                                color: Colors.pinkAccent,
-                                fontSize: 80,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                          child: const Icon(
+                            Icons.workspace_premium,
+                            color: Colors.amber,
+                            size: 80,
                           ),
                         ),
 
@@ -124,7 +95,7 @@ class HomePage extends StatelessWidget {
                           "Nail's Passion",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 46,
+                            fontSize: 42,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -139,19 +110,19 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
 
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 40),
 
                         const Text(
                           "La beauté est ma passion 💖",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 38,
+                            fontSize: 34,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
 
-                        const SizedBox(height: 50),
+                        const SizedBox(height: 40),
 
                         Row(
                           mainAxisAlignment:
@@ -183,7 +154,7 @@ class HomePage extends StatelessWidget {
               "Nos Prestations",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 36,
+                fontSize: 38,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -201,113 +172,146 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
 
-  static Widget premiumButton(
-    IconData icon,
-    String text,
-  ) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 30,
-        vertical: 18,
-      ),
+Widget premiumIcon(IconData icon) {
+  return Container(
+    padding: const EdgeInsets.all(16),
 
-      decoration: BoxDecoration(
-        color: Colors.pinkAccent,
-        borderRadius: BorderRadius.circular(40),
+    decoration: BoxDecoration(
+      color: Colors.pinkAccent,
+      shape: BoxShape.circle,
 
-        boxShadow: [
-          BoxShadow(
-            color: Colors.pinkAccent.withOpacity(0.7),
-            blurRadius: 25,
-          ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.pinkAccent.withOpacity(0.7),
+          blurRadius: 25,
+        ),
+      ],
+    ),
+
+    child: Icon(
+      icon,
+      color: Colors.white,
+      size: 28,
+    ),
+  );
+}
+
+Widget premiumButton(
+  IconData icon,
+  String title,
+) {
+  return Container(
+    padding: const EdgeInsets.symmetric(
+      horizontal: 35,
+      vertical: 18,
+    ),
+
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(40),
+
+      gradient: const LinearGradient(
+        colors: [
+          Colors.pinkAccent,
+          Colors.pink,
         ],
       ),
 
-      child: Row(
-        children: [
+      boxShadow: [
+        BoxShadow(
+          color: Colors.pinkAccent.withOpacity(0.7),
+          blurRadius: 25,
+        ),
+      ],
+    ),
 
-          Icon(
-            icon,
+    child: Row(
+      children: [
+
+        Icon(
+          icon,
+          color: Colors.white,
+        ),
+
+        const SizedBox(width: 10),
+
+        Text(
+          title,
+          style: const TextStyle(
             color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
           ),
+        ),
+      ],
+    ),
+  );
+}
 
-          const SizedBox(width: 10),
+Widget serviceCard(
+  IconData icon,
+  String title,
+  String price,
+) {
+  return Container(
+    margin: const EdgeInsets.symmetric(
+      horizontal: 20,
+      vertical: 12,
+    ),
 
-          Text(
-            text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 22,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+    padding: const EdgeInsets.all(25),
 
-  static Widget serviceCard(
-    IconData icon,
-    String title,
-    String price,
-  ) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 12,
-      ),
+    decoration: BoxDecoration(
+      color: Colors.white.withOpacity(0.05),
 
-      padding: const EdgeInsets.all(25),
+      borderRadius: BorderRadius.circular(30),
 
-      decoration: BoxDecoration(
-        color: const Color(0xFF111111),
-        borderRadius: BorderRadius.circular(30),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.pinkAccent.withOpacity(0.3),
+          blurRadius: 30,
+          spreadRadius: 2,
+        ),
+      ],
+    ),
 
-        boxShadow: [
-          BoxShadow(
-            color: Colors.pinkAccent.withOpacity(0.25),
-            blurRadius: 30,
-          ),
-        ],
-      ),
+    child: Row(
+      mainAxisAlignment:
+          MainAxisAlignment.spaceBetween,
 
-      child: Row(
-        mainAxisAlignment:
-            MainAxisAlignment.spaceBetween,
+      children: [
 
-        children: [
+        Row(
+          children: [
 
-          Row(
-            children: [
-
-              Icon(
-                icon,
-                color: Colors.pinkAccent,
-                size: 35,
-              ),
-
-              const SizedBox(width: 20),
-
-              Text(
-                title,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                ),
-              ),
-            ],
-          ),
-
-          Text(
-            price,
-            style: const TextStyle(
+            Icon(
+              icon,
               color: Colors.pinkAccent,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+              size: 36,
             ),
+
+            const SizedBox(width: 20),
+
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 28,
+              ),
+            ),
+          ],
+        ),
+
+        Text(
+          price,
+          style: const TextStyle(
+            color: Colors.pinkAccent,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
 }
