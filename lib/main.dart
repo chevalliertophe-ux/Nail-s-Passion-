@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const NailsApp());
+  runApp(const NailsPassionApp());
 }
 
-class NailsApp extends StatelessWidget {
-  const NailsApp({super.key});
+class NailsPassionApp extends StatelessWidget {
+  const NailsPassionApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.black,
+      ),
       home: const HomePage(),
     );
   }
@@ -21,99 +24,102 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
 
       backgroundColor: Colors.black,
 
-      appBar: AppBar(
-        backgroundColor: Colors.pinkAccent,
-        title: const Text("Nail's Passion"),
-      ),
+      body: SafeArea(
 
-      body: SingleChildScrollView(
+        child: SingleChildScrollView(
 
-        child: Column(
+          child: Column(
 
-          children: [
+            children: [
 
-            const SizedBox(height: 30),
+              const SizedBox(height: 20),
 
-            const Icon(
-              Icons.workspace_premium,
-              color: Colors.amber,
-              size: 100,
-            ),
-
-            const SizedBox(height: 20),
-
-            const Text(
-              "Nail's Passion",
-              style: TextStyle(
-                color: Colors.pinkAccent,
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
+              const Icon(
+                Icons.workspace_premium,
+                color: Colors.amber,
+                size: 90,
               ),
-            ),
 
-            const SizedBox(height: 10),
+              const SizedBox(height: 10),
 
-            const Text(
-              "La beauté est notre passion 💖",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
+              const Text(
+                "Nail's Passion",
+                style: TextStyle(
+                  color: Colors.pinkAccent,
+                  fontSize: 38,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
 
-            const SizedBox(height: 40),
+              const SizedBox(height: 10),
 
-            Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceEvenly,
-
-              children: [
-
-                serviceButton(
-                  Icons.brush,
-                  "Pose Gel",
+              const Text(
+                "La beauté est notre passion 💖",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
                 ),
+              ),
 
-                serviceButton(
-                  Icons.auto_awesome,
-                  "Nail Art",
+              const SizedBox(height: 30),
+
+              Padding(
+                padding: const EdgeInsets.all(15),
+
+                child: Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceEvenly,
+
+                  children: [
+
+                    premiumButton(
+                      Icons.brush,
+                      "Pose Gel",
+                    ),
+
+                    premiumButton(
+                      Icons.auto_awesome,
+                      "Nail Art",
+                    ),
+
+                    premiumButton(
+                      Icons.favorite,
+                      "Manucure",
+                    ),
+                  ],
                 ),
+              ),
 
-                serviceButton(
-                  Icons.favorite,
-                  "Manucure",
-                ),
-              ],
-            ),
+              const SizedBox(height: 20),
 
-            const SizedBox(height: 40),
+              premiumCard(
+                "Pose Gel",
+                "25€",
+              ),
 
-            prestationCard(
-              "Pose Gel",
-              "25€",
-            ),
+              premiumCard(
+                "Nail Art",
+                "15€",
+              ),
 
-            prestationCard(
-              "Nail Art",
-              "15€",
-            ),
+              premiumCard(
+                "Remplissage",
+                "20€",
+              ),
 
-            prestationCard(
-              "Remplissage",
-              "20€",
-            ),
+              premiumCard(
+                "Manucure",
+                "15€",
+              ),
 
-            prestationCard(
-              "Manucure",
-              "15€",
-            ),
-
-            const SizedBox(height: 30),
-          ],
+              const SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
 
@@ -121,9 +127,11 @@ class HomePage extends StatelessWidget {
 
         backgroundColor: Colors.black,
 
-        selectedItemColor: Colors.pinkAccent,
+        selectedItemColor:
+            Colors.pinkAccent,
 
-        unselectedItemColor: Colors.white,
+        unselectedItemColor:
+            Colors.white,
 
         items: const [
 
@@ -156,7 +164,55 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget prestationCard(
+  Widget premiumButton(
+    IconData icon,
+    String text,
+  ) {
+
+    return Column(
+
+      children: [
+
+        Container(
+
+          padding: const EdgeInsets.all(20),
+
+          decoration: BoxDecoration(
+
+            color: Colors.pinkAccent,
+
+            shape: BoxShape.circle,
+
+            boxShadow: const [
+
+              BoxShadow(
+                color: Colors.pinkAccent,
+                blurRadius: 25,
+              ),
+            ],
+          ),
+
+          child: Icon(
+            icon,
+            color: Colors.white,
+            size: 35,
+          ),
+        ),
+
+        const SizedBox(height: 10),
+
+        Text(
+          text,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget premiumCard(
     String title,
     String price,
   ) {
@@ -169,16 +225,22 @@ class HomePage extends StatelessWidget {
 
       decoration: BoxDecoration(
 
-        color: Colors.pinkAccent,
-
         borderRadius:
             BorderRadius.circular(30),
+
+        gradient: const LinearGradient(
+
+          colors: [
+            Colors.pinkAccent,
+            Colors.black,
+          ],
+        ),
 
         boxShadow: const [
 
           BoxShadow(
             color: Colors.pinkAccent,
-            blurRadius: 20,
+            blurRadius: 25,
           ),
         ],
       ),
@@ -205,51 +267,13 @@ class HomePage extends StatelessWidget {
             price,
 
             style: const TextStyle(
-              color: Colors.white,
-              fontSize: 24,
+              color: Colors.pinkAccent,
+              fontSize: 26,
               fontWeight: FontWeight.bold,
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget serviceButton(
-    IconData icon,
-    String text,
-  ) {
-
-    return Column(
-
-      children: [
-
-        CircleAvatar(
-
-          radius: 45,
-
-          backgroundColor:
-              Colors.pinkAccent,
-
-          child: Icon(
-            icon,
-            color: Colors.white,
-            size: 40,
-          ),
-        ),
-
-        const SizedBox(height: 10),
-
-        Text(
-
-          text,
-
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 22,
-          ),
-        ),
-      ],
     );
   }
 }
