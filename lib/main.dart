@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'home_page.dart';
+import 'gallery_page.dart';
+import 'contact_page.dart';
+import 'admin_page.dart';
+
 void main() {
   runApp(const NailsPassionApp());
 }
@@ -11,34 +16,31 @@ class NailsPassionApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      home: const MainPage(),
+      home: const MainNavigation(),
     );
   }
 }
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+class MainNavigation extends StatefulWidget {
+  const MainNavigation({super.key});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<MainNavigation> createState() => _MainNavigationState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainNavigationState extends State<MainNavigation> {
   int currentIndex = 0;
 
-  final pages = const [
-    HomePage(),
-    GalleryPage(),
-    ServicesPage(),
-    ContactPage(),
-    AdminPage(),
+  final List<Widget> pages = [
+    const HomePage(),
+    const GalleryPage(),
+    const ContactPage(),
+    const AdminPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: pages[currentIndex],
 
       bottomNavigationBar: BottomNavigationBar(
@@ -58,93 +60,22 @@ class _MainPageState extends State<MainPage> {
             icon: Icon(Icons.home),
             label: "Accueil",
           ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.image),
             label: "Galerie",
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: "Prestations",
-          ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.phone),
             label: "Contact",
           ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.lock),
             label: "Admin",
           ),
         ],
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Accueil Premium",
-        style: TextStyle(color: Colors.white, fontSize: 30),
-      ),
-    );
-  }
-}
-
-class GalleryPage extends StatelessWidget {
-  const GalleryPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Galerie",
-        style: TextStyle(color: Colors.white, fontSize: 30),
-      ),
-    );
-  }
-}
-
-class ServicesPage extends StatelessWidget {
-  const ServicesPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Prestations",
-        style: TextStyle(color: Colors.white, fontSize: 30),
-      ),
-    );
-  }
-}
-
-class ContactPage extends StatelessWidget {
-  const ContactPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Contact",
-        style: TextStyle(color: Colors.white, fontSize: 30),
-      ),
-    );
-  }
-}
-
-class AdminPage extends StatelessWidget {
-  const AdminPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Admin",
-        style: TextStyle(color: Colors.white, fontSize: 30),
       ),
     );
   }
