@@ -1,0 +1,42 @@
+{
+  "id": "521ba095-9268-4840-addf-3d930a07c118",
+  "status": "ERRORED",
+  "platform": "ANDROID",
+  "error": {
+    "errorCode": "EAS_BUILD_UNKNOWN_GRADLE_ERROR",
+    "message": "Gradle build failed with unknown error. See logs for the \"Run gradlew\" phase for more information."
+  },
+  "artifacts": {},
+  "initiatingActor": {
+    "id": "da4dcdea-ee27-4b22-9f66-3aa118b97e3b",
+    "displayName": "totof63"
+  },
+  "logFiles": [
+    "https://storage.googleapis.com/eas-workflows-production/logs/2a79a26a-366c-4063-8e26-c65b35d3a1de/521ba095-9268-4840-addf-3d930a07c118/2026-05-25T21%3A29%3A53Z-327c5d80-1024-4aac-8c54-22960e6ce65b.txt?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=www-production%40exponentjs.iam.gserviceaccount.com%2F20260525%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260525T214552Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=71e1f6bf8471e41bfed4627d837ec9e426545a730c590293375941ac38f91b12f8608c06eab4c80d6c4b80815fceea6844bd573fbdcc5879ecac2ecd78a31bc2a8bc0e1cf2c66f1e58d0b22e08b68bab6f0b45b80e190ad67c8872b78100106ae9504f55ec09dad43faa82f314c4b09e1e226b157558a32f53821be30f0c4080ab4d3663412b6f6b4c5f5b88873d36ffec7eee40c8ec0a414c6d0ceebe2361710511fb9cfe21a28217fa0f49440cc6e4060ebd40935e87997700e0b87156d2405e541ceb77ebcb33a3ef8d3156ea172978ffdeb5e10d237488dd1c9f0e6529f46b4bd3447536d5afe25b4193339883d3105513590b732f5918a8e33d1b769cdf"
+  ],
+  "project": {
+    "id": "2a79a26a-366c-4063-8e26-c65b35d3a1de",
+    "name": "NailPassionClean",
+    "slug": "NailPassionClean",
+    "ownerAccount": {
+      "id": "492b62bc-e92d-4b9b-9d04-1ffd0d250706",
+      "name": "totof63"
+    }
+  },
+  "distribution": "INTERNAL",
+  "buildProfile": "preview",
+  "sdkVersion": "54.0.0",
+  "appVersion": "1.0.0",
+  "appBuildVersion": "1",
+  "priority": "NORMAL",
+  "createdAt": "2026-05-25T21:29:50.158Z",
+  "updatedAt": "2026-05-25T21:33:04.601Z",
+  "completedAt": "2026-05-25T21:33:04.001Z",
+  "expirationDate": "2026-06-08T21:29:50.208Z",
+  "isForIosSimulator": false,
+  "metrics": {
+    "buildWaitTime": 2642,
+    "buildQueueTime": 4886,
+    "buildDuration": 186315
+  }
+}
