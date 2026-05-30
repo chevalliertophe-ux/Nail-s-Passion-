@@ -7,11 +7,12 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#111',
-          borderTopColor: '#ff4fa3',
+          backgroundColor: '#0a0a0a',
+          borderTopColor: '#ff4fa0',
+          height: 65,
         },
-        tabBarActiveTintColor: '#ff4fa3',
-        tabBarInactiveTintColor: '#999',
+        tabBarActiveTintColor: '#ff4fa0',
+        tabBarInactiveTintColor: '#888',
       }}>
 
       <Tabs.Screen
@@ -45,11 +46,11 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="contact"
+        name="agenda"
         options={{
-          title: 'Contact',
+          title: 'Agenda',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="call" size={size} color={color} />
+            <Ionicons name="calendar" size={size} color={color} />
           ),
         }}
       />
@@ -66,3 +67,4 @@ export default function TabLayout() {
     </Tabs>
   );
 }
+
