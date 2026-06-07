@@ -2,7 +2,7 @@
 
 ## Problem Statement
 Reprendre projet GitHub Flutter d'application mobile pour salon d'onglerie "Nail's Passion".
-Le client a fourni des maquettes avec 7 écrans (luxury dark theme + rose néon + or). Le projet GitHub original était en Flutter mais incomplet. Choix retenu : **refaire en React PWA mobile-first** identique aux maquettes pour avoir un preview live et une livraison rapide.
+Le client a fourni des maquettes avec 7 écrans (luxury dark theme + rose néon + or). Le code GitHub original était basique (5 fichiers Dart, admin non fonctionnel). Choix retenu : **refaire en React PWA mobile-first** identique aux maquettes.
 
 ## Tech Stack
 - **Frontend**: React 19, Tailwind, React Router, Axios, Lucide icons
@@ -11,58 +11,66 @@ Le client a fourni des maquettes avec 7 écrans (luxury dark theme + rose néon 
 - **Fonts**: Great Vibes (script), Outfit (body), Playfair Display (italic)
 
 ## Personas
-- **Cliente** : visite l'app, consulte prestations/galerie, contacte (tel/WhatsApp/Insta), réserve un RDV.
-- **Admin (gérante)** : entre via PIN 1234, gère infos, prestations, galerie, horaires, promotions, valide les RDV.
+- **Cliente** : visite l'app, consulte prestations/galerie, contacte (tel/WhatsApp/Insta), réserve, consulte sa fidélité.
+- **Admin (gérante)** : accès caché (5 taps sur logo) + PIN 1234. Gère absolument tout.
 
 ## Core Requirements
-1. UI identique aux maquettes (7 écrans + booking)
-2. Navigation bottom tab (5 onglets)
-3. Admin protégé par PIN
-4. Galerie : upload sans Firebase (base64 dans Mongo OU URL)
-5. Réservations clients validées par admin
-6. Bouton externe vers agenda SumUp
+1. ✅ UI identique aux maquettes (7 écrans + booking + fidélité)
+2. ✅ Navigation bottom tab (5 onglets : Accueil, Galerie, Prestations, Contact, Profil)
+3. ✅ Admin caché protégé par PIN (5 taps sur le logo "Nail's Passion")
+4. ✅ Galerie : upload sans Firebase (base64 ou URL)
+5. ✅ Réservations clients validées par admin
+6. ✅ Bouton vers agenda SumUp : `https://sumupbookings.com/nails-passion`
+7. ✅ Gestion de **toutes les photos** depuis admin (splash, hero, cards, prestations)
+8. ✅ Programme fidélité (auto-incrément à chaque RDV confirmé, récompense au seuil)
+9. ✅ Changement de thème (sombre / rosé clair)
 
-## Implemented (07/06/2026)
-### Frontend (React PWA)
-- ✅ `/welcome` — Splash screen avec logo & CTAs
-- ✅ `/` — Home (Bienvenue, hero circulaire, quick icons, services)
-- ✅ `/galerie` — Grid 3 colonnes + filtres + upload admin (URL/base64)
-- ✅ `/prestations` — Liste avec filtres (Toutes/Ongles/Soins/Extras)
-- ✅ `/contact` — Tel / WhatsApp / Instagram / Adresse / Horaires (deep links natifs)
-- ✅ `/profil` — Profil + accès admin
-- ✅ `/admin` — Pavé PIN 4 chiffres
-- ✅ `/admin/panel` — Menu principal admin
-- ✅ `/admin/infos` — Édition infos & PIN
-- ✅ `/admin/prestations` — CRUD prestations (modal)
-- ✅ `/admin/horaires` — Édition horaires
-- ✅ `/admin/promotions` — CRUD promotions
-- ✅ `/admin/bookings` — Validation/annulation RDV (3 onglets pending/confirmed/cancelled)
-- ✅ `/reserver` — Formulaire réservation client + bouton SumUp externe
+## Implemented Timeline
 
-### Backend (FastAPI)
-- ✅ Auth admin PIN → token Bearer (in-memory)
-- ✅ CRUD complet : `settings`, `prestations`, `gallery`, `promotions`, `bookings`
-- ✅ Auto-seed (6 prestations, 9 photos galerie) au démarrage
-- ✅ Endpoint public `/api/settings/public` (sans PIN)
-- ✅ Réservation publique (sans auth) + validation admin
+### 07/06/2026 — Phase 1 (MVP)
+- 7 écrans pixel-proches des maquettes (Splash, Home, Galerie, Prestations, Contact, Admin PIN, Admin Panel)
+- Admin panel : infos, prestations CRUD, horaires, promotions CRUD, bookings validation
+- Booking interne + bouton SumUp externe
+- Backend FastAPI auto-seedé, auth Bearer token
+- ✅ Tests : 19/19 backend, 100% frontend
 
-### Tests
-- ✅ 19/19 tests pytest backend
-- ✅ Tous les 7 écrans validés par testing agent
+### 07/06/2026 — Phase 2 (Demande utilisateur)
+- ✅ **SumUp URL** : `https://sumupbookings.com/nails-passion`
+- ✅ **Admin caché** : 5 taps sur "Nail's Passion" → PIN (suppression du bouton cloche, remplacé par 🎁 fidélité)
+- ✅ **Gestion images** : nouvelle page `/admin/images` (splash, hero, 2 cards d'accueil) + champ image_url sur chaque prestation (URL ou upload base64)
+- ✅ **Programme fidélité** : 
+  - Track visites par numéro de téléphone (auto-incrément quand admin confirme un RDV)
+  - Page client `/fidelite` (saisie numéro → progress bar + récompense débloquée)
+  - Page admin `/admin/loyalty` (config seuil/récompense + top clientes)
+- ✅ **Thème** : toggle dark ↔ rosé clair (admin persist en DB, visiteur en localStorage)
+- ✅ Tests : 27/27 backend, 100% frontend, aucune régression
 
-## Backlog (Phase 2)
-- **P1 — Notifications email** via SendGrid (confirmation au client quand admin valide RDV)
-- **P1 — Notifications in-app** (badge sur tab "Profil" pour bookings en attente)
-- **P2 — Comptes clients** (inscription/connexion pour historique RDV)
-- **P2 — Date/time picker stylé** (remplacer input natifs par calendrier shadcn dark+pink)
-- **P2 — JWT signé** + PIN hashé bcrypt (sécurité production)
-- **P2 — Manifest PWA + service worker** pour installation sur écran d'accueil
-- **P2 — Wrap Capacitor** pour APK Android + iOS App Store
-- **P3 — Vraies photos** : remplacer images stock par photos du salon (via admin upload)
-- **P3 — Avis clients** sur les prestations
-- **P3 — Programme fidélité** (carte de tampons digitale)
+## Backlog
 
-## Notes
-- Admin PIN par défaut : **1234** (modifiable via `/admin/infos`)
-- SumUp URL : placeholder (`https://book.sumup.com/`), à remplacer par la vraie URL du salon
-- Coordonnées : placeholders (06 12 34 56 78, @nailspassion, etc.) — à mettre à jour
+### P1
+- 📧 **Notifications email** SendGrid : confirmation client quand admin valide
+- 🔔 **Badge in-app** sur l'onglet Profil quand bookings en attente
+- 📱 **PWA manifest + service worker** pour installation iOS/Android
+
+### P2
+- 📅 Date/time picker stylé (remplacer inputs natifs par calendrier shadcn)
+- 🔒 PIN hashé bcrypt + JWT signé (sécurité prod)
+- 👤 Comptes clients (inscription/connexion pour historique RDV + fidélité auto-liée)
+- 📲 Wrap Capacitor → APK Android + bundle iOS
+- 🔍 Recherche/filtre dans /admin/loyalty (quand liste grandit)
+- 🧹 Gating `GET /api/settings` derrière require_admin (PIN actuellement exposé)
+
+### P3
+- 📸 Vraies photos du salon (placeholder Unsplash actuellement)
+- ⭐ Avis clientes
+- 🎁 Coupons promo générés à la récompense fidélité
+- 📊 Dashboard stats admin (CA estimé, RDV par mois, etc.)
+
+## Credentials
+- **Admin PIN** : `1234` (modifiable via `/admin/infos`)
+- **Accès admin** : 5 taps sur "Nail's Passion" sur l'écran d'accueil
+
+## URLs importantes
+- App : https://app-builder-demo-109.preview.emergentagent.com/
+- SumUp : https://sumupbookings.com/nails-passion
+- Splash : `/welcome` • Accueil : `/` • Fidélité : `/fidelite` • Admin caché : (5 taps logo)
