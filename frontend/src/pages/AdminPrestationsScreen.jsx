@@ -5,7 +5,7 @@ import ScreenHeader from "@/components/ScreenHeader";
 import api from "@/lib/api";
 import { Plus, Trash2, Edit3, X, Save } from "lucide-react";
 
-const emptyForm = { title: "", description: "", price: 15, category: "ongles", icon: "sparkles", order: 0 };
+const emptyForm = { title: "", description: "", price: 15, category: "ongles", icon: "sparkles", image_url: "", order: 0 };
 
 export default function AdminPrestationsScreen() {
   const { prestations, refresh, isAdmin } = useApp();
@@ -76,13 +76,29 @@ export default function AdminPrestationsScreen() {
                 <option value="extras">Extras</option>
               </select>
               <select data-testid="form-icon" value={form.icon} onChange={(e) => setForm({ ...form, icon: e.target.value })} className="w-full bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl px-4 py-3 text-white">
-                <option value="sparkles">✨ Sparkles</option>
-                <option value="palette">🎨 Palette</option>
-                <option value="hand">✋ Hand</option>
-                <option value="refresh-cw">🔄 Refresh</option>
-                <option value="shield">🛡️ Shield</option>
-                <option value="minus-circle">➖ Minus</option>
+                <option value="sparkles">Sparkles</option>
+                <option value="palette">Palette</option>
+                <option value="hand">Hand</option>
+                <option value="refresh-cw">Refresh</option>
+                <option value="shield">Shield</option>
+                <option value="minus-circle">Minus</option>
               </select>
+              {form.image_url && (
+                <div className="rounded-xl overflow-hidden h-24 bg-black/30">
+                  <img src={form.image_url} alt="" className="w-full h-full object-cover" />
+                </div>
+              )}
+              <input data-testid="form-image" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} placeholder="URL image (ou téléverser ci-dessous)" className="w-full bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl px-4 py-3 text-white outline-none focus:border-[#FF1493]" />
+              <label className="flex items-center gap-2 bg-[#FF1493]/10 border border-[#FF1493]/30 text-[#FF1493] rounded-xl px-3 py-2 text-sm font-medium cursor-pointer w-fit">
+                Téléverser image
+                <input data-testid="form-image-file" type="file" accept="image/*" onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  const r = new FileReader();
+                  r.onload = () => setForm(prev => ({ ...prev, image_url: r.result }));
+                  r.readAsDataURL(file);
+                }} className="hidden" />
+              </label>
               <input data-testid="form-order" type="number" value={form.order} onChange={(e) => setForm({ ...form, order: e.target.value })} placeholder="Ordre" className="w-full bg-[#1A1A1A] border border-[#2A2A2A] rounded-xl px-4 py-3 text-white outline-none focus:border-[#FF1493]" />
 
               <button onClick={save} data-testid="form-save" className="w-full bg-[#FF1493] text-white rounded-full py-3 font-semibold flex items-center justify-center gap-2 glow-pink-sm">

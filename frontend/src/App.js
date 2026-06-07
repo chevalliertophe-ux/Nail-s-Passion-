@@ -16,9 +16,10 @@ import AdminPrestationsScreen from "@/pages/AdminPrestationsScreen";
 import AdminHorairesScreen from "@/pages/AdminHorairesScreen";
 import AdminPromotionsScreen from "@/pages/AdminPromotionsScreen";
 import AdminBookingsScreen from "@/pages/AdminBookingsScreen";
+import AdminImagesScreen from "@/pages/AdminImagesScreen";
+import AdminLoyaltyScreen from "@/pages/AdminLoyaltyScreen";
 import BookingScreen from "@/pages/BookingScreen";
-
-const hideNavOn = ["/welcome", "/admin"];
+import LoyaltyScreen from "@/pages/LoyaltyScreen";
 
 function NavGate() {
   const location = useLocation();
@@ -41,6 +42,7 @@ function App() {
               <Route path="/contact" element={<ContactScreen />} />
               <Route path="/profil" element={<ProfileScreen />} />
               <Route path="/reserver" element={<BookingScreen />} />
+              <Route path="/fidelite" element={<LoyaltyScreen />} />
               <Route path="/admin" element={<AdminPinScreen />} />
               <Route path="/admin/panel" element={<AdminPanelScreen />} />
               <Route path="/admin/infos" element={<AdminInfosScreen />} />
@@ -48,6 +50,8 @@ function App() {
               <Route path="/admin/horaires" element={<AdminHorairesScreen />} />
               <Route path="/admin/promotions" element={<AdminPromotionsScreen />} />
               <Route path="/admin/bookings" element={<AdminBookingsScreen />} />
+              <Route path="/admin/images" element={<AdminImagesScreen />} />
+              <Route path="/admin/loyalty" element={<AdminLoyaltyScreen />} />
             </Routes>
             <NavGate />
           </div>

@@ -2,14 +2,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "@/context/AppContext";
 import ScreenHeader from "@/components/ScreenHeader";
-import { Settings as SettingsIcon, Tag, Image as ImageIcon, Clock, Gift, LogOut, ChevronRight, CalendarCheck, Crown } from "lucide-react";
+import { Settings as SettingsIcon, Tag, Image as ImageIcon, Clock, Gift, LogOut, ChevronRight, CalendarCheck, Crown, Trophy, ImagePlus } from "lucide-react";
 
 const menu = [
-  { key: "infos", title: "Modifier infos", subtitle: "WhatsApp, Instagram, Adresse", icon: SettingsIcon, path: "/admin/infos" },
+  { key: "infos", title: "Modifier infos", subtitle: "Tél, WhatsApp, Instagram, Adresse", icon: SettingsIcon, path: "/admin/infos" },
   { key: "prestations", title: "Prestations & Tarifs", subtitle: "Gérer vos prestations", icon: Tag, path: "/admin/prestations" },
+  { key: "images", title: "Images du site", subtitle: "Splash, hero, cards d'accueil", icon: ImagePlus, path: "/admin/images" },
   { key: "gallery", title: "Galerie Photos", subtitle: "Ajouter, modifier, supprimer", icon: ImageIcon, path: "/galerie" },
   { key: "horaires", title: "Horaires", subtitle: "Gérer vos horaires", icon: Clock, path: "/admin/horaires" },
   { key: "promotions", title: "Promotions", subtitle: "Offres & nouveautés", icon: Gift, path: "/admin/promotions" },
+  { key: "loyalty", title: "Fidélité", subtitle: "Programme & top clientes", icon: Trophy, path: "/admin/loyalty" },
   { key: "bookings", title: "Réservations", subtitle: "Valider les RDV clients", icon: CalendarCheck, path: "/admin/bookings" },
 ];
 

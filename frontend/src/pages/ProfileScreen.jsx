@@ -1,12 +1,31 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "@/context/AppContext";
-import { User, Calendar, Settings as SettingsIcon, ExternalLink, LogOut, ChevronRight, Lock } from "lucide-react";
+import { User, Calendar, Settings as SettingsIcon, ExternalLink, LogOut, ChevronRight, Trophy, Sun, Moon } from "lucide-react";
 import ScreenHeader from "@/components/ScreenHeader";
+import api from "@/lib/api";
 
 export default function ProfileScreen() {
   const navigate = useNavigate();
-  const { settings, isAdmin, logoutAdmin } = useApp();
+  const { settings, isAdmin, logoutAdmin, refresh } = useApp();
+
+  const toggleTheme = async () => {
+    const next = settings?.theme === "light" ? "dark" : "light";
+    // L'admin seul peut changer le thème "permanent" ; sinon override local
+    if (isAdmin) {
+      await api.put("/settings", { theme: next });
+      await refresh();
+    } else {
+      // Override local visiteur
+      const newTheme = next;
+      document.documentElement.dataset.theme = newTheme;
+      localStorage.setItem("np_theme", newTheme);
+      // force update via custom event
+      window.dispatchEvent(new Event("themechange"));
+    }
+  };
+
+  const currentTheme = settings?.theme || "dark";
 
   return (
     <div className="pb-32 min-h-screen" data-testid="profile-screen">
@@ -31,6 +50,14 @@ export default function ProfileScreen() {
           <ChevronRight size={20} className="text-white/30" />
         </button>
 
+        {settings?.loyalty_enabled && (
+          <button onClick={() => navigate("/fidelite")} data-testid="profile-loyalty" className="w-full bg-[#111111] border border-white/5 rounded-[22px] p-4 flex items-center gap-4 active:scale-[0.98] transition-transform">
+            <div className="w-12 h-12 rounded-2xl bg-[#FFD700]/15 flex items-center justify-center"><Trophy size={20} className="text-[#FFD700]" /></div>
+            <div className="flex-1 text-left"><p className="text-white font-semibold">Programme fidélité</p><p className="text-white/45 text-xs">Vos visites & récompenses</p></div>
+            <ChevronRight size={20} className="text-white/30" />
+          </button>
+        )}
+
         {settings?.sumup_url && (
           <button onClick={() => window.open(settings.sumup_url, "_blank")} data-testid="profile-sumup" className="w-full bg-[#111111] border border-white/5 rounded-[22px] p-4 flex items-center gap-4 active:scale-[0.98] transition-transform">
             <div className="w-12 h-12 rounded-2xl bg-[#FF1493]/15 flex items-center justify-center"><ExternalLink size={20} className="text-[#FF1493]" /></div>
@@ -39,7 +66,18 @@ export default function ProfileScreen() {
           </button>
         )}
 
-        {isAdmin ? (
+        <button onClick={toggleTheme} data-testid="profile-theme" className="w-full bg-[#111111] border border-white/5 rounded-[22px] p-4 flex items-center gap-4 active:scale-[0.98] transition-transform">
+          <div className="w-12 h-12 rounded-2xl bg-[#FF1493]/15 flex items-center justify-center">
+            {currentTheme === "dark" ? <Sun size={20} className="text-[#FFD700]" /> : <Moon size={20} className="text-[#FF1493]" />}
+          </div>
+          <div className="flex-1 text-left">
+            <p className="text-white font-semibold">Thème</p>
+            <p className="text-white/45 text-xs">Actuel : {currentTheme === "dark" ? "Sombre 🌙" : "Rosé clair 🌸"}</p>
+          </div>
+          <ChevronRight size={20} className="text-white/30" />
+        </button>
+
+        {isAdmin && (
           <>
             <button onClick={() => navigate("/admin/panel")} data-testid="profile-admin-panel" className="w-full bg-[#111111] border border-[#FF1493]/30 rounded-[22px] p-4 flex items-center gap-4 active:scale-[0.98] transition-transform">
               <div className="w-12 h-12 rounded-2xl bg-[#FF1493] flex items-center justify-center"><SettingsIcon size={20} className="text-white" /></div>
@@ -51,14 +89,10 @@ export default function ProfileScreen() {
               <div className="flex-1 text-left"><p className="text-white font-semibold">Déconnexion admin</p></div>
             </button>
           </>
-        ) : (
-          <button onClick={() => navigate("/admin")} data-testid="profile-admin-access" className="w-full bg-[#111111] border border-white/5 rounded-[22px] p-4 flex items-center gap-4 active:scale-[0.98] transition-transform">
-            <div className="w-12 h-12 rounded-2xl bg-[#FF1493]/15 flex items-center justify-center"><Lock size={20} className="text-[#FF1493]" /></div>
-            <div className="flex-1 text-left"><p className="text-white font-semibold">Accès Administrateur</p><p className="text-white/45 text-xs">Code PIN requis</p></div>
-            <ChevronRight size={20} className="text-white/30" />
-          </button>
         )}
       </div>
+
+      <p className="text-center text-white/20 text-[10px] mt-10">v1.0 • Nail&apos;s Passion</p>
     </div>
   );
 }

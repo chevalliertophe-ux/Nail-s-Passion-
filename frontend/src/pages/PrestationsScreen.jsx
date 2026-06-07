@@ -64,9 +64,15 @@ export default function PrestationsScreen() {
               data-testid={`presta-${p.id}`}
               className="w-full bg-[#111111] border border-white/5 rounded-[22px] p-4 flex items-center gap-4 active:scale-[0.98] transition-transform hover:border-[#FF1493]/40"
             >
-              <div className="w-12 h-12 rounded-2xl bg-[#FF1493]/15 flex items-center justify-center shrink-0">
-                <Icon size={22} className="text-[#FF1493]" />
-              </div>
+              {p.image_url ? (
+                <div className="w-14 h-14 rounded-2xl overflow-hidden shrink-0 border border-[#FF1493]/30">
+                  <img src={p.image_url} alt="" className="w-full h-full object-cover" />
+                </div>
+              ) : (
+                <div className="w-12 h-12 rounded-2xl bg-[#FF1493]/15 flex items-center justify-center shrink-0">
+                  <Icon size={22} className="text-[#FF1493]" />
+                </div>
+              )}
               <div className="flex-1 text-left">
                 <p className="text-white font-semibold text-base">{p.title}</p>
                 <p className="text-white/45 text-xs mt-0.5">{p.description}</p>

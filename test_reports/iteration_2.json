@@ -1,0 +1,42 @@
+{
+  "summary": "Phase 2 testing for Nail's Passion PWA — new features (loyalty program, image management, hidden 5-tap admin access, theme toggle, prestation images, SumUp URL update). 27/27 backend pytest cases PASS (8 new Phase-2 tests added on top of the existing 19). Frontend Playwright sweep validated all new screens (/fidelite, /admin/images, /admin/loyalty, theme toggle on /profil) and regression on existing flows. Booking confirm correctly auto-increments db.loyalty (verified end-to-end: backend test created TEST_LoyClient with 1 visit, frontend /fidelite then showed '1/10' for the same phone, and /admin/loyalty listed TEST_LoyClient). Light theme renders cleanly (bg=rgb(255,245,249), text=rgb(26,10,20)) — fully readable. Hidden admin 5-tap on logo (data-testid=home-logo-tap) navigates to /admin within the 1.2s window.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "/api/loyalty (admin list)", "issue": "Endpoint does not exclude TEST_ phones; consider a query filter or admin-side filter for production cleanliness. Not blocking."},
+      {"endpoint": "/api/settings", "issue": "Still returns admin_pin via GET /api/settings (only /settings/public hides it). Flagged in iteration_1 as well — recommend gating /api/settings behind require_admin or always strip pin."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "PrestationsScreen thumbnails", "issues": ["Thumbnails render at 54x54px on Chromium (Tailwind w-14/h-14 ≈ 56px). Spec asked for 56x56 — visual diff negligible (2px), no action needed."]},
+      {"screen": "BookingScreen (regression from iteration_1)", "issues": ["Native browser date/time picker still in use; not addressed this phase — still flagged for design parity."]}
+    ]
+  },
+  "test_report_links": ["/app/backend/tests/backend_test.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "(Optional) Gate GET /api/settings behind require_admin so the admin_pin is never exposed via any public route.",
+    "(Optional, carried over) Replace native date/time inputs in BookingScreen.jsx with shadcn Calendar + time picker.",
+    "(Optional) On /admin/loyalty, add a search/filter input so admins can find a client by phone or name when the list grows."
+  ],
+  "critical_code_review_comments": [
+    "server.py grew to 468 lines but remains cohesive (single domain). Still acceptable. If Phase 3 adds more endpoints, consider splitting into routers/ submodules (settings.py, loyalty.py, bookings.py).",
+    "Loyalty increment logic in PUT /api/bookings/{id}/status correctly handles idempotency (prev_status check) — verified by test_booking_confirm_increments_loyalty (re-confirming the same booking does NOT double-increment).",
+    "Phone normalization only strips spaces; consider also stripping +, -, (, ), and country-code differences to avoid duplicate loyalty records for the same client.",
+    "Light-theme contrast: body color rgb(26,10,20) on bg rgb(255,245,249) → contrast ratio ≈ 15:1, WCAG AAA compliant. Good.",
+    "Default Settings still has hard-coded admin_pin='1234'. Same flag as iteration_1 — for production, source from env or hashed value.",
+    "Loyalty endpoint /api/loyalty/{phone} returns visits=0 for unknown phones (no 404). That's fine UX-wise but document it so consumers know."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py (added TestPublicSettingsPhase2, TestPrestationImage, TestLoyalty classes — 8 new tests)"
+  ],
+  "success_rate": {"backend": "100% (27/27)", "frontend": "100% (all data-testids present and flows working)"},
+  "test_credentials": "Admin PIN: 1234",
+  "seed_data_creation": "Reused iteration_1 seed (6 prestations + 9 gallery items). Phase-2 tests created TEST_ prefixed prestation/booking/loyalty rows and cleaned up bookings/prestations. db.loyalty entry for phone 0612TESTLOY (client_name TEST_LoyClient, 1 visit) remains — kept intentionally to validate the /fidelite frontend flow; can be cleaned by `db.loyalty.deleteMany({phone:/TEST/})` if desired.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Run `pytest /app/backend/tests/backend_test.py -v` — 27 tests cover original 19 + 8 new Phase-2. Admin PIN 1234. The 5-tap logo navigation MUST be tested at viewport 414x896 by clicking [data-testid='home-logo-tap'] 5x within 1.2s; do NOT use page.goto('/admin') as a substitute. Theme is read from document.documentElement.dataset.theme (set by AppContext after GET /api/settings/public). For admin-side theme persistence the toggle calls PUT /api/settings — for non-admin it falls back to localStorage. Loyalty record for phone 0612TESTLOY pre-exists from prior backend test runs.",
+  "rca of the issue": "No bugs surfaced this iteration. All Phase 2 features (loyalty, image management, hidden admin, theme toggle, prestation images, SumUp URL) behave as specified end-to-end. No regressions in previously-passing flows (admin login, prestations CRUD, gallery, promotions, bookings)."
+}

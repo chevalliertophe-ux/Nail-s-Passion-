@@ -10,6 +10,7 @@ export const AppProvider = ({ children }) => {
   const [promotions, setPromotions] = useState([]);
   const [adminToken, setAdminToken] = useState(localStorage.getItem("np_admin_token") || null);
   const [loading, setLoading] = useState(true);
+  const [localTheme, setLocalTheme] = useState(localStorage.getItem("np_theme"));
 
   const isAdmin = !!adminToken;
 
@@ -34,6 +35,19 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     refresh();
+  }, []);
+
+  // Apply theme: localTheme wins for non-admin, otherwise settings.theme
+  useEffect(() => {
+    const t = localTheme || settings?.theme || "dark";
+    document.documentElement.dataset.theme = t;
+  }, [settings, localTheme]);
+
+  // listen for local theme changes (from ProfileScreen toggleTheme)
+  useEffect(() => {
+    const handler = () => setLocalTheme(localStorage.getItem("np_theme"));
+    window.addEventListener("themechange", handler);
+    return () => window.removeEventListener("themechange", handler);
   }, []);
 
   const loginAdmin = async (pin) => {

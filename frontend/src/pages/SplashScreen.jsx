@@ -12,7 +12,7 @@ export default function SplashScreen() {
       {/* Background hero image with overlay */}
       <div className="absolute inset-0">
         <img
-          src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1200"
+          src={settings?.splash_image || "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1200"}
           alt=""
           className="w-full h-full object-cover opacity-50"
         />

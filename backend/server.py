@@ -43,8 +43,19 @@ class Settings(BaseModel):
     address: str = "123 Rue de la Beauté, 75000 Paris, France"
     hours_weekday: str = "Lundi - Samedi : 9h - 19h"
     hours_weekend: str = "Dimanche : Fermé"
-    sumup_url: str = "https://book.sumup.com/"
+    sumup_url: str = "https://sumupbookings.com/nails-passion"
     admin_pin: str = "1234"
+    # Images du site (URLs ou data URIs)
+    splash_image: str = "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1200"
+    home_hero_image: str = "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=800"
+    home_card_image_1: str = "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=400"
+    home_card_image_2: str = "https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=400"
+    # Thème
+    theme: str = "dark"  # "dark" or "light"
+    # Fidélité
+    loyalty_enabled: bool = True
+    loyalty_threshold: int = 10  # nb RDV pour récompense
+    loyalty_reward: str = "1 Nail Art offert"
 
 
 class SettingsUpdate(BaseModel):
@@ -59,6 +70,14 @@ class SettingsUpdate(BaseModel):
     hours_weekend: Optional[str] = None
     sumup_url: Optional[str] = None
     admin_pin: Optional[str] = None
+    splash_image: Optional[str] = None
+    home_hero_image: Optional[str] = None
+    home_card_image_1: Optional[str] = None
+    home_card_image_2: Optional[str] = None
+    theme: Optional[str] = None
+    loyalty_enabled: Optional[bool] = None
+    loyalty_threshold: Optional[int] = None
+    loyalty_reward: Optional[str] = None
 
 
 class Prestation(BaseModel):
@@ -69,6 +88,7 @@ class Prestation(BaseModel):
     price: float
     category: Literal["ongles", "soins", "extras"] = "ongles"
     icon: str = "sparkles"  # lucide icon name
+    image_url: str = ""  # photo de la prestation
     order: int = 0
 
 
@@ -78,6 +98,7 @@ class PrestationCreate(BaseModel):
     price: float
     category: Literal["ongles", "soins", "extras"] = "ongles"
     icon: str = "sparkles"
+    image_url: str = ""
     order: int = 0
 
 
@@ -323,10 +344,48 @@ async def list_bookings(_=Depends(require_admin)):
 async def update_booking_status(bid: str, status: str, _=Depends(require_admin)):
     if status not in ("pending", "confirmed", "cancelled"):
         raise HTTPException(400, "Statut invalide")
-    result = await db.bookings.update_one({"id": bid}, {"$set": {"status": status}})
-    if result.matched_count == 0:
+    booking = await db.bookings.find_one({"id": bid}, {"_id": 0})
+    if not booking:
         raise HTTPException(404, "Réservation introuvable")
+    prev_status = booking.get("status")
+    await db.bookings.update_one({"id": bid}, {"$set": {"status": status}})
+    # Incrément fidélité quand un RDV passe en confirmed
+    if status == "confirmed" and prev_status != "confirmed":
+        phone = booking.get("client_phone", "").replace(" ", "")
+        if phone:
+            await db.loyalty.update_one(
+                {"phone": phone},
+                {"$inc": {"visits": 1},
+                 "$set": {"client_name": booking.get("client_name", ""), "last_visit": now_iso()}},
+                upsert=True,
+            )
     return {"ok": True}
+
+
+# ----- LOYALTY -----
+@api_router.get("/loyalty/{phone}")
+async def get_loyalty(phone: str):
+    phone_norm = phone.replace(" ", "")
+    doc = await db.loyalty.find_one({"phone": phone_norm}, {"_id": 0})
+    settings = await db.settings.find_one({"id": "settings"}, {"_id": 0})
+    threshold = settings.get("loyalty_threshold", 10) if settings else 10
+    reward = settings.get("loyalty_reward", "1 Nail Art offert") if settings else "1 Nail Art offert"
+    visits = doc.get("visits", 0) if doc else 0
+    return {
+        "phone": phone_norm,
+        "visits": visits,
+        "threshold": threshold,
+        "reward": reward,
+        "client_name": doc.get("client_name", "") if doc else "",
+        "progress_pct": min(100, int((visits / threshold) * 100)) if threshold else 0,
+        "reward_unlocked": visits >= threshold,
+    }
+
+
+@api_router.get("/loyalty")
+async def list_loyalty(_=Depends(require_admin)):
+    docs = await db.loyalty.find({}, {"_id": 0}).sort("visits", -1).to_list(500)
+    return docs
 
 
 @api_router.delete("/bookings/{bid}")
@@ -348,12 +407,12 @@ async def seed_data():
     count = await db.prestations.count_documents({})
     if count == 0:
         default_prestations = [
-            {"title": "Pose Gel", "description": "Finition élégante et longue tenue", "price": 25, "category": "ongles", "icon": "sparkles", "order": 1},
-            {"title": "Nail Art", "description": "Designs premium & personnalisés", "price": 15, "category": "ongles", "icon": "palette", "order": 2},
-            {"title": "Remplissage Gel", "description": "Entretien & renforcement", "price": 20, "category": "ongles", "icon": "refresh-cw", "order": 3},
-            {"title": "Manucure Simple", "description": "Soin des mains + vernis", "price": 15, "category": "soins", "icon": "hand", "order": 4},
-            {"title": "Gainage", "description": "Renforcement des ongles naturels", "price": 20, "category": "soins", "icon": "shield", "order": 5},
-            {"title": "Dépose Gel", "description": "Dépose en douceur", "price": 10, "category": "extras", "icon": "minus-circle", "order": 6},
+            {"title": "Pose Gel", "description": "Finition élégante et longue tenue", "price": 25, "category": "ongles", "icon": "sparkles", "image_url": "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=400", "order": 1},
+            {"title": "Nail Art", "description": "Designs premium & personnalisés", "price": 15, "category": "ongles", "icon": "palette", "image_url": "https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=400", "order": 2},
+            {"title": "Remplissage Gel", "description": "Entretien & renforcement", "price": 20, "category": "ongles", "icon": "refresh-cw", "image_url": "https://images.unsplash.com/photo-1610992015732-2449b76344bc?q=80&w=400", "order": 3},
+            {"title": "Manucure Simple", "description": "Soin des mains + vernis", "price": 15, "category": "soins", "icon": "hand", "image_url": "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?q=80&w=400", "order": 4},
+            {"title": "Gainage", "description": "Renforcement des ongles naturels", "price": 20, "category": "soins", "icon": "shield", "image_url": "https://images.unsplash.com/photo-1604902396830-aca29e19b067?q=80&w=400", "order": 5},
+            {"title": "Dépose Gel", "description": "Dépose en douceur", "price": 10, "category": "extras", "icon": "minus-circle", "image_url": "https://images.unsplash.com/photo-1607779097040-26e80aa78e66?q=80&w=400", "order": 6},
         ]
         for p in default_prestations:
             await db.prestations.insert_one(Prestation(**p).model_dump())
