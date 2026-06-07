@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, Header
+from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -52,6 +53,9 @@ class Settings(BaseModel):
     home_card_image_2: str = "https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=400"
     # Thème
     theme: str = "dark"  # "dark" or "light"
+    vibe: str = "rose-smoke"  # rose-smoke | glitter-gold | pink-dream | black-luxe | lavender-magic
+    logo_url: str = "/api/static/branding/logo.png"
+    icon_url: str = "/api/static/branding/icon.png"
     # Fidélité
     loyalty_enabled: bool = True
     loyalty_threshold: int = 10  # nb RDV pour récompense
@@ -75,6 +79,9 @@ class SettingsUpdate(BaseModel):
     home_card_image_1: Optional[str] = None
     home_card_image_2: Optional[str] = None
     theme: Optional[str] = None
+    vibe: Optional[str] = None
+    logo_url: Optional[str] = None
+    icon_url: Optional[str] = None
     loyalty_enabled: Optional[bool] = None
     loyalty_threshold: Optional[int] = None
     loyalty_reward: Optional[str] = None
@@ -388,6 +395,63 @@ async def list_loyalty(_=Depends(require_admin)):
     return docs
 
 
+# ----- LOGO / BRANDING (admin-only) -----
+class LogoRegenRequest(BaseModel):
+    prompt: Optional[str] = None
+    kind: Literal["logo", "icon"] = "logo"
+
+
+@api_router.post("/admin/regenerate-logo")
+async def regenerate_logo(payload: LogoRegenRequest, _=Depends(require_admin)):
+    """Re-generate logo or icon via Gemini Nano Banana."""
+    import base64 as b64
+    try:
+        from emergentintegrations.llm.chat import LlmChat, UserMessage
+    except ImportError:
+        raise HTTPException(500, "emergentintegrations not installed")
+
+    api_key = os.environ.get("EMERGENT_LLM_KEY")
+    if not api_key:
+        raise HTTPException(400, "EMERGENT_LLM_KEY missing in .env")
+
+    default_logo_prompt = (
+        "Ultra-premium logo for 'Nail's Passion' luxury nail salon. "
+        "Stylized cursive elegant letter N in vibrant hot pink (#FF1493) with neon glow, "
+        "topped with ornate gold crown (#FFD700). Below: 'Nail's Passion' in elegant cursive script. "
+        "Pure deep black background. Pink smoke wisps and gold sparkles. Feminine, glamorous, luxurious. "
+        "Centered 1:1 square, no extra text artifacts."
+    )
+    default_icon_prompt = (
+        "App icon for 'Nail's Passion'. Ornate cursive N in hot pink (#FF1493) with tiny gold crown, "
+        "pure deep black circular background, subtle pink neon glow ring. Simple, iconic, no text."
+    )
+    prompt = payload.prompt or (default_logo_prompt if payload.kind == "logo" else default_icon_prompt)
+
+    session_id = f"branding-{payload.kind}-{int(datetime.now(timezone.utc).timestamp())}"
+    chat = LlmChat(api_key=api_key, session_id=session_id,
+                   system_message="You are an expert luxury beauty brand designer.")
+    chat.with_model("gemini", "gemini-3.1-flash-image-preview").with_params(modalities=["image", "text"])
+
+    msg = UserMessage(text=prompt)
+    _, images = await chat.send_message_multimodal_response(msg)
+
+    if not images:
+        raise HTTPException(500, "Image generation failed")
+
+    branding_dir = ROOT_DIR / "static" / "branding"
+    branding_dir.mkdir(parents=True, exist_ok=True)
+    filename = f"{payload.kind}.png"
+    out = branding_dir / filename
+    image_bytes = b64.b64decode(images[0]["data"])
+    out.write_bytes(image_bytes)
+
+    url = f"/api/static/branding/{filename}?t={int(datetime.now(timezone.utc).timestamp())}"
+    field = "logo_url" if payload.kind == "logo" else "icon_url"
+    await db.settings.update_one({"id": "settings"}, {"$set": {field: url}}, upsert=True)
+
+    return {"ok": True, "url": url, "kind": payload.kind, "size": len(image_bytes)}
+
+
 @api_router.delete("/bookings/{bid}")
 async def delete_booking(bid: str, _=Depends(require_admin)):
     result = await db.bookings.delete_one({"id": bid})
@@ -438,6 +502,11 @@ async def seed_data():
 
 
 app.include_router(api_router)
+
+# Static branding & uploads
+static_dir = ROOT_DIR / "static"
+static_dir.mkdir(exist_ok=True)
+app.mount("/api/static", StaticFiles(directory=str(static_dir)), name="static")
 
 app.add_middleware(
     CORSMiddleware,

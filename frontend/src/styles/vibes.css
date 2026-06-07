@@ -1,0 +1,125 @@
+/* ============ VIBES (girly ambient themes) ============ */
+
+/* base setup for full app */
+.vibe-host { position: relative; overflow: hidden; }
+
+/* Vibe defaults: tokens */
+.vibe-rose-smoke { --accent: #FF1493; --accent2: #FFD700; }
+.vibe-glitter-gold { --accent: #FFB300; --accent2: #FF1493; }
+.vibe-pink-dream { --accent: #FF6FA3; --accent2: #FFC0E0; }
+.vibe-black-luxe { --accent: #FFD700; --accent2: #FF1493; }
+.vibe-lavender-magic { --accent: #B57BFF; --accent2: #FF6FE0; }
+
+/* ============ Rose Smoke (default) ============ */
+.fx-smoke {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+}
+.fx-smoke::before, .fx-smoke::after {
+  content: ""; position: absolute; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,20,147,0.35), transparent 60%);
+  filter: blur(60px);
+  animation: smokeFloat 14s ease-in-out infinite;
+}
+.fx-smoke::before { top: 10%; left: -10%; }
+.fx-smoke::after { bottom: 0; right: -10%; animation-delay: -7s; background: radial-gradient(circle, rgba(255,20,147,0.25), transparent 60%); }
+@keyframes smokeFloat {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(40px,-40px) scale(1.15); }
+}
+
+/* ============ Glitter Gold ============ */
+.fx-glitter {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+}
+.fx-glitter .g-particle {
+  position: absolute; width: 6px; height: 6px; border-radius: 50%;
+  background: radial-gradient(circle, #FFD700, rgba(255,215,0,0.2));
+  box-shadow: 0 0 8px #FFD700, 0 0 16px rgba(255,20,147,0.6);
+  animation: glitterFall linear infinite;
+}
+@keyframes glitterFall {
+  0% { transform: translateY(-10vh) scale(0.5); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(110vh) scale(1.2); opacity: 0; }
+}
+
+/* ============ Pink Dream (floating hearts) ============ */
+.fx-hearts {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+}
+.fx-hearts .heart {
+  position: absolute; color: #FF6FA3;
+  filter: drop-shadow(0 0 8px rgba(255,111,163,0.6));
+  animation: heartFloat linear infinite;
+  font-size: 18px;
+}
+@keyframes heartFloat {
+  0% { transform: translateY(110vh) rotate(-15deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) rotate(15deg); opacity: 0; }
+}
+
+/* ============ Black Luxe (subtle sparkles) ============ */
+.fx-luxe {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+}
+.fx-luxe::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(2px 2px at 20% 30%, #FFD700 50%, transparent),
+    radial-gradient(1px 1px at 80% 60%, #FFD700 50%, transparent),
+    radial-gradient(1.5px 1.5px at 40% 80%, #FFD700 50%, transparent),
+    radial-gradient(1px 1px at 60% 20%, #FFD700 50%, transparent),
+    radial-gradient(1.5px 1.5px at 10% 70%, #FFD700 50%, transparent),
+    radial-gradient(1px 1px at 90% 90%, #FFD700 50%, transparent);
+  animation: luxeTwinkle 4s ease-in-out infinite;
+}
+@keyframes luxeTwinkle {
+  0%,100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ============ Lavender Magic (butterflies + lavender mist) ============ */
+.fx-magic {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+}
+.fx-magic::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top, rgba(181,123,255,0.25), transparent 60%),
+              radial-gradient(ellipse at bottom right, rgba(255,111,224,0.2), transparent 60%);
+  filter: blur(40px);
+}
+.fx-magic .bfly {
+  position: absolute; font-size: 22px;
+  filter: drop-shadow(0 0 8px rgba(181,123,255,0.7));
+  animation: butterFly 14s ease-in-out infinite;
+}
+@keyframes butterFly {
+  0% { transform: translate(-10vw, 80vh) rotate(-10deg); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translate(110vw, -10vh) rotate(15deg); opacity: 0; }
+}
+
+/* ============ Vibe-specific overrides on main app ============ */
+.vibe-pink-dream[data-theme="light"], .vibe-pink-dream {
+  /* lighter base background tint */
+}
+
+.vibe-glitter-gold .glow-pink,
+.vibe-glitter-gold .glow-pink-sm { box-shadow: 0 0 30px rgba(255,179,0,0.55) !important; }
+
+.vibe-black-luxe .text-pink, .vibe-black-luxe .text-\[\#FF1493\] { color: #FFD700 !important; }
+.vibe-black-luxe .bg-\[\#FF1493\] { background: #FFD700 !important; color: #050505 !important; }
+.vibe-black-luxe .border-\[\#FF1493\] { border-color: #FFD700 !important; }
+.vibe-black-luxe .border-\[\#FF1493\]\/30 { border-color: rgba(255,215,0,0.3) !important; }
+.vibe-black-luxe .bg-\[\#FF1493\]\/15 { background: rgba(255,215,0,0.15) !important; }
+
+.vibe-lavender-magic .text-\[\#FF1493\] { color: #B57BFF !important; }
+.vibe-lavender-magic .bg-\[\#FF1493\] { background: #B57BFF !important; }
+.vibe-lavender-magic .border-\[\#FF1493\] { border-color: #B57BFF !important; }
+.vibe-lavender-magic .border-\[\#FF1493\]\/30 { border-color: rgba(181,123,255,0.4) !important; }
+.vibe-lavender-magic .bg-\[\#FF1493\]\/15 { background: rgba(181,123,255,0.15) !important; }
+.vibe-lavender-magic .glow-pink, .vibe-lavender-magic .glow-pink-sm { box-shadow: 0 0 30px rgba(181,123,255,0.55) !important; }

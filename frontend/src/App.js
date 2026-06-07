@@ -1,8 +1,10 @@
 import React from "react";
 import "@/App.css";
+import "@/styles/vibes.css";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AppProvider } from "@/context/AppContext";
 import BottomNav from "@/components/BottomNav";
+import VibeEffects from "@/components/VibeEffects";
 import SplashScreen from "@/pages/SplashScreen";
 import HomeScreen from "@/pages/HomeScreen";
 import GalleryScreen from "@/pages/GalleryScreen";
@@ -18,6 +20,7 @@ import AdminPromotionsScreen from "@/pages/AdminPromotionsScreen";
 import AdminBookingsScreen from "@/pages/AdminBookingsScreen";
 import AdminImagesScreen from "@/pages/AdminImagesScreen";
 import AdminLoyaltyScreen from "@/pages/AdminLoyaltyScreen";
+import AdminThemeScreen from "@/pages/AdminThemeScreen";
 import BookingScreen from "@/pages/BookingScreen";
 import LoyaltyScreen from "@/pages/LoyaltyScreen";
 
