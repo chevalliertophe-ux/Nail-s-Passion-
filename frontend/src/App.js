@@ -1,53 +1,57 @@
-import { useEffect } from "react";
+import React from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "@/constants/testIds";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AppProvider } from "@/context/AppContext";
+import BottomNav from "@/components/BottomNav";
+import SplashScreen from "@/pages/SplashScreen";
+import HomeScreen from "@/pages/HomeScreen";
+import GalleryScreen from "@/pages/GalleryScreen";
+import PrestationsScreen from "@/pages/PrestationsScreen";
+import ContactScreen from "@/pages/ContactScreen";
+import ProfileScreen from "@/pages/ProfileScreen";
+import AdminPinScreen from "@/pages/AdminPinScreen";
+import AdminPanelScreen from "@/pages/AdminPanelScreen";
+import AdminInfosScreen from "@/pages/AdminInfosScreen";
+import AdminPrestationsScreen from "@/pages/AdminPrestationsScreen";
+import AdminHorairesScreen from "@/pages/AdminHorairesScreen";
+import AdminPromotionsScreen from "@/pages/AdminPromotionsScreen";
+import AdminBookingsScreen from "@/pages/AdminBookingsScreen";
+import BookingScreen from "@/pages/BookingScreen";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+const hideNavOn = ["/welcome", "/admin"];
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          data-testid={HOME.emergentLink}
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+function NavGate() {
+  const location = useLocation();
+  const path = location.pathname;
+  if (path === "/welcome" || path === "/admin") return null;
+  return <BottomNav />;
+}
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
+        <AppProvider>
+          <div className="mobile-frame">
+            <Routes>
+              <Route path="/welcome" element={<SplashScreen />} />
+              <Route path="/" element={<HomeScreen />} />
+              <Route path="/galerie" element={<GalleryScreen />} />
+              <Route path="/prestations" element={<PrestationsScreen />} />
+              <Route path="/contact" element={<ContactScreen />} />
+              <Route path="/profil" element={<ProfileScreen />} />
+              <Route path="/reserver" element={<BookingScreen />} />
+              <Route path="/admin" element={<AdminPinScreen />} />
+              <Route path="/admin/panel" element={<AdminPanelScreen />} />
+              <Route path="/admin/infos" element={<AdminInfosScreen />} />
+              <Route path="/admin/prestations" element={<AdminPrestationsScreen />} />
+              <Route path="/admin/horaires" element={<AdminHorairesScreen />} />
+              <Route path="/admin/promotions" element={<AdminPromotionsScreen />} />
+              <Route path="/admin/bookings" element={<AdminBookingsScreen />} />
+            </Routes>
+            <NavGate />
+          </div>
+        </AppProvider>
       </BrowserRouter>
     </div>
   );
