@@ -1,0 +1,107 @@
+{
+  "project_name": "Nail's Passion",
+  "theme": "dark",
+  "archetype": "5 (Luxury) with 7 (Electric/Neon) accents",
+  "colors": {
+    "background": "#050505",
+    "surface": "#1A1A1A",
+    "surface_secondary": "#242424",
+    "primary": "#FF1493",
+    "primary_glow": "rgba(255, 20, 147, 0.5)",
+    "secondary": "#FFD700",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#B3B3B3",
+    "border": "#333333"
+  },
+  "typography": {
+    "headings": {
+      "font_family": "'Great Vibes', cursive",
+      "import_url": "@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');",
+      "weights": ["400"],
+      "usage": "Brand name, welcome messages, main section titles (e.g., 'Bienvenue', 'La beauté est notre passion')"
+    },
+    "body": {
+      "font_family": "'Outfit', sans-serif",
+      "import_url": "@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap');",
+      "weights": ["300", "400", "500", "600"],
+      "usage": "Service details, prices, buttons, navigation"
+    }
+  },
+  "spacing_and_layout": {
+    "container_padding": "p-4 sm:p-6 md:p-8",
+    "border_radius": {
+      "cards": "rounded-[25px]",
+      "buttons": "rounded-full",
+      "hero_image": "rounded-full",
+      "admin_button": "rounded-[25px]"
+    },
+    "effects": {
+      "pink_halo": "shadow-[0_0_25px_rgba(255,20,147,0.6)]",
+      "subtle_glow": "shadow-[0_0_10px_rgba(255,20,147,0.3)]",
+      "glass": "backdrop-blur-xl bg-[#050505]/80 border-t border-white/5"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-[#FF1493] text-white rounded-full px-6 py-3 font-medium shadow-[0_0_15px_rgba(255,20,147,0.5)] hover:bg-[#FF2E88] transition-all",
+      "outline": "border border-[#FF1493] text-[#FF1493] rounded-full px-6 py-3 font-medium hover:bg-[#FF1493]/10 transition-all",
+      "admin_card": "bg-[#1A1A1A] rounded-[25px] p-6 flex flex-col items-center justify-center gap-3 border border-transparent hover:border-[#FF1493]/30 transition-all shadow-md"
+    },
+    "filters_pills": {
+      "active": "bg-[#FF1493] text-white rounded-full px-5 py-2 text-sm font-medium shadow-[0_0_10px_rgba(255,20,147,0.4)] whitespace-nowrap",
+      "inactive": "bg-[#1A1A1A] border border-[#333333] text-[#B3B3B3] rounded-full px-5 py-2 text-sm font-medium whitespace-nowrap hover:border-[#FF1493]/50 transition-colors"
+    },
+    "cards": {
+      "service_card": "bg-[#1A1A1A] rounded-[25px] p-4 flex items-center justify-between transition-all hover:shadow-[0_0_15px_rgba(255,20,147,0.3)] border border-transparent hover:border-[#FF1493]/30",
+      "price_text": "text-[#FF1493] font-semibold text-lg"
+    },
+    "bottom_nav": {
+      "container": "fixed bottom-0 w-full backdrop-blur-xl bg-[#050505]/90 border-t border-white/10 pb-safe pt-2 px-4 flex justify-around items-end h-20 rounded-t-3xl z-50",
+      "item": "flex flex-col items-center justify-center pb-2 text-[10px] gap-1 relative w-16",
+      "active_icon_wrapper": "bg-[#FF1493] rounded-full p-3 text-white shadow-[0_0_15px_rgba(255,20,147,0.6)] absolute -top-8 border-4 border-[#050505]",
+      "inactive_icon": "text-[#888888] hover:text-[#FF1493] transition-colors p-2"
+    },
+    "admin_pin_pad": {
+      "button": "w-[80px] h-[80px] rounded-[40px] bg-[#1A1A1A] text-white text-3xl font-medium flex items-center justify-center border border-[#333333] active:bg-[#FF1493] active:shadow-[0_0_20px_rgba(255,20,147,0.6)] transition-all touch-manipulation"
+    }
+  },
+  "media": {
+    "images": [
+      {
+        "url": "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHwzfHxsdXh1cnklMjBuYWlsJTIwYXJ0JTIwbWFuaWN1cmV8ZW58MHx8fHwxNzgwODM5ODk1fDA&ixlib=rb-4.1.0&q=85",
+        "category": "hero",
+        "description": "Woman's pink manicure. Use as the central circular hero image with pink neon glow."
+      },
+      {
+        "url": "https://images.pexels.com/photos/34971940/pexels-photo-34971940.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "gallery",
+        "description": "Turquoise nail art. Gallery item."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1771441580033-3979bc33627b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHw0fHxuZW9uJTIwcGluayUyMGJlYXV0eSUyMHNhbG9ufGVufDB8fHx8MTc4MDgzOTg5NXww&ixlib=rb-4.1.0&q=85",
+        "category": "gallery",
+        "description": "Neon painted nails art. Gallery item."
+      },
+      {
+        "url": "https://images.pexels.com/photos/9169061/pexels-photo-9169061.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "gallery",
+        "description": "Elegant manicure and floral setup. Gallery item."
+      }
+    ],
+    "icons": {
+      "crown": "Lucide's Crown icon, apply text-[#FFD700] for gold effect.",
+      "heart": "Lucide's Heart icon, apply text-[#FF1493] for neon pink effect."
+    }
+  },
+  "instructions_to_main_agent": [
+    "CRITICAL: Set the global background color strictly to deep black (#050505) and text color to white.",
+    "CRITICAL: Add @import statements in your global CSS to load 'Great Vibes' and 'Outfit' Google Fonts.",
+    "Typography Usage: Apply 'font-great-vibes' to headings, hero text ('Bienvenue', 'La beauté est notre passion'), and decorative titles. Apply 'font-outfit' to all other components.",
+    "Hero Section: On the home page, the main image MUST be perfectly circular (`rounded-full`) and have a prominent pink glow effect (`shadow-[0_0_25px_rgba(255,20,147,0.6)]`).",
+    "Bottom Navigation: Implement fixed bottom navigation with 5 distinct states. The ACTIVE tab must pop out of the bar (e.g., `-translate-y-8`), have a solid pink circular background (`#FF1493`), and a pink shadow glow. The INACTIVE tabs stay flat and muted.",
+    "UI Radius Strategy: The user specifically wants smooth, rounded edges. Cards should be `rounded-[25px]`, pills and primary buttons should be `rounded-full`.",
+    "Neon Glow Effects: Whenever a primary action is active (like the active filter pill or the admin PIN button press), apply the glowing shadow class `shadow-[0_0_15px_rgba(255,20,147,0.5)]`.",
+    "Admin PIN Screen: The PIN keypad needs to have large round numeric buttons (80x80px). Ensure the active/pressed state of these buttons turns the background neon pink with a pink glow.",
+    "Testing: Add explicit `data-testid` attributes to every button, navigation link, filter pill, and input in the app."
+  ]
+}
